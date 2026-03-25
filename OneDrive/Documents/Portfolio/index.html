@@ -82,11 +82,13 @@
 
         /* Essential Utility Overrides */
         .btn-circle { white-space: nowrap !important; } /* Force CONNECT arrow to stay inline */
-        a[href^="mailto:"] { word-break: break-all !important; font-size: clamp(16px, 6vw, 4rem) !important; } /* Stop email string from bleeding */
         
         @media (max-width: 900px) {
             /* 0. Universal Container Padding Recovery (Prevents flush edge-sticking) */
             .container { padding-left: 24px !important; padding-right: 24px !important; }
+
+            /* Essential Mobile Utility Overrides */
+            a[href^="mailto:"] { word-break: break-all !important; font-size: clamp(16px, 6vw, 4rem) !important; } /* Stop email string from bleeding only on mobile */
 
             /* 1. Global Navigation */
             .nav { padding: 0 16px !important; }
