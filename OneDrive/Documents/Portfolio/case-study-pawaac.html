@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAWAAC | Autonomous Drone Surveillance — Sanjana Gupta</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+
+    <style>
+        :root {
+            --jakarta: 'Plus Jakarta Sans', sans-serif;
+            --instrument: 'Instrument Serif', serif;
+            --accent-pawaac: #3B82F6;
+            --bg-ambient: #F7F7F7;
+        }
+
+        [data-theme="dark"] :root {
+            --bg-ambient: #0B0B0B;
+        }
+
+        body { 
+            font-family: var(--jakarta); 
+            background: var(--bg-primary); 
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120vw;
+            height: 120vh;
+            background: radial-gradient(circle at 20% 30%, rgba(59,130,246,0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(59,130,246,0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cs-hero {
+            padding: 140px 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cs-hero__back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 48px;
+            transition: color 0.2s ease;
+        }
+        .cs-hero__back:hover { color: var(--accent-pawaac); }
+
+        .cs-hero__tag {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .cs-hero__title {
+            font-size: clamp(40px, 8vw, 84px);
+            line-height: 1.05;
+            color: var(--text-primary);
+            max-width: 900px;
+            margin-bottom: 32px;
+            font-weight: 600;
+            letter-spacing: -2.5px;
+        }
+
+        .cs-hero__title em {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent-pawaac);
+            letter-spacing: 0;
+            padding-right: 4px;
+        }
+
+        .cs-hero__subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.6;
+            margin-bottom: 56px;
+            font-weight: 400;
+        }
+
+        /* Live Browser Embed */
+        .live-browser {
+            width: 100%;
+            height: 750px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            margin-top: 60px;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        }
+
+        .live-browser iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .cs-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: var(--space-6);
+        }
+
+        .cs-meta-item__label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .cs-meta-item__value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .cs-body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .cs-section { margin-bottom: var(--space-7); }
+
+        .cs-section__num {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-pawaac);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .cs-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .cs-section p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .cs-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+        }
+
+        .cs-section ul li {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .cs-section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 8px;
+            height: 2px;
+            background: var(--accent-pawaac);
+        }
+
+        @media (max-width: 768px) {
+            .cs-hero__title { font-size: 40px; }
+            .cs-meta-row { gap: 24px; }
+            .live-browser { height: 450px; }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <span id="loaderText">PAWAAC...</span>
+    </div>
+
+    <!-- Magnetic Glowing Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo magnetic">Sanjana.</a>
+        <div class="nav__links">
+            <a href="index.html#work" class="nav__link magnetic hoverable">Work</a>
+            <a href="index.html#about" class="nav__link magnetic hoverable">About</a>
+            <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
+            <button class="theme-btn magnetic hoverable" id="themeToggle" aria-label="Toggle Theme">
+                <span id="themeLabel">☾ Dark</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="smooth-wrapper">
+        <div class="container">
+            <header class="cs-hero reveal">
+                <a href="index.html" class="cs-hero__back">← Back to work</a>
+                <span class="cs-hero__tag">Web Design · Premium Tech · 2024</span>
+                <h1 class="cs-hero__title">PAWAAC: Marketing a <em>Tech Giant.</em></h1>
+                <p class="cs-hero__subtitle">Redesigned from scratch in Framer, the official PAWAAC product website is architected for premium brand storytelling and high-intent user conversion. Built for a world of autonomous precision.</p>
+                
+                <div class="cs-meta-row">
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Role</div>
+                        <div class="cs-meta-item__value">Product Designer</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Duration</div>
+                        <div class="cs-meta-item__value">6 Weeks</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Tools Use</div>
+                        <div class="cs-meta-item__value">Framer, Figma</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Live Link</div>
+                        <a href="https://www.pawaac.com/" target="_blank" style="text-decoration: none;">
+                            <div class="cs-meta-item__value" style="color: var(--accent-pawaac); text-transform: uppercase; letter-spacing: 1px;">Visit Site ↗</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Live Website Embed -->
+                <div class="live-browser reveal">
+                    <iframe src="https://www.pawaac.com/" title="PAWAAC Live Site"></iframe>
+                </div>
+            </header>
+
+            <main class="cs-body">
+                <!-- Overview -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">01 / The Mission</span>
+                    <h2>Telling the Story of Tech.</h2>
+                    <p>When I was approached to redesign the PAWAAC website, the challenge was clear: move away from a traditional dashboard-style landing page towards a cinematic, high-end product experience. I focused on architecting a narrative that explains complex drone tech in an intuitive, premium way.</p>
+                    <p>Using Framer, I implemented a site that isn't just a marketing tool—it's a technical statement. Every interaction signifies the speed and accuracy of the product family it represents.</p>
+                </section>
+
+                <!-- Process -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">02 / Design Logic</span>
+                    <h2>Architecture of Trust.</h2>
+                    <p>Defense tech often feels cold and intimidating. I chose to blend industrial aesthetics with "human-first" interaction models. If an operator trusts the interface, they make fewer tactical errors.</p>
+                    <ul>
+                        <li><strong>Blueprint Grid:</strong> Established a strict mathematical layout that feels engineered and reliable.</li>
+                        <li><strong>High-Contrast HUD:</strong> Optimized for visibility in low-light environments (night surveillance).</li>
+                        <li><strong>Fluid Interactions:</strong> Using Framer’s motion engine to signify data flow transitions.</li>
+                    </ul>
+                </section>
+
+                <!-- Impact -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">03 / Outcome</span>
+                    <h2>Mission Successful.</h2>
+                    <p>The redesign transformed a complex dashboard into a streamlined command center. The result is a platform that isn't just "functional"—it's a premium experience that respects the user’s cognitive load.</p>
+                </section>
+            </main>
+
+                <footer style="padding: 120px 0; border-top: 1px solid var(--border); text-align: center;">
+                    <span class="cs-hero__tag">Next Case Study</span>
+                    <a href="case-study-zodiaq.html" style="font-size: 32px; font-weight: 700; color: var(--text-primary); text-decoration: none; display: block; margin-top: 16px; margin-bottom: 60px;">ZODIAQ &rarr;</a>
+                    
+                    <div style="display: flex; gap: 32px; justify-content: center; margin-bottom: 60px;">
+                        <a href="mailto:sanjanagupta1502@gmail.com" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">Email ↗</a>
+                        <a href="https://www.linkedin.com/in/sanjanagupta1502/" target="_blank" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">LinkedIn ↗</a>
+                        <a href="https://behance.net/sanjanagupta18" target="_blank" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">Behance ↗</a>
+                    </div>
+
+                    <div style="padding-top: 40px; border-top: 1px solid var(--border); opacity: 0.5; font-size: 11px; letter-spacing: 1px;">
+                        © <span class="current-year">2026</span> SANJANA GUPTA | BLENDING LOGIC WITH EMOTION
+                    </div>
+                </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/cursor.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-inview');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('loader--hidden');
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

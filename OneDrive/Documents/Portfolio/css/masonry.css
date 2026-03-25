@@ -1,0 +1,251 @@
+/* Masonry grid for Other Projects */
+.masonry-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-bottom: 2rem;
+}
+.masonry-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  background: var(--color-bg, #181818);
+  transition: transform 0.4s cubic-bezier(.4,2,.6,1), box-shadow 0.2s, border 0.2s;
+  cursor: pointer;
+  animation: fadeInMasonry 0.8s cubic-bezier(.4,2,.6,1) both;
+  opacity: 0;
+  will-change: transform, box-shadow;
+  perspective: 800px;
+}
+.masonry-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-radius: 1.2rem;
+  transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+.masonry-card:hover img {
+  transform: scale(1.07) rotate(-1deg);
+}
+.masonry-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22), 0 0 0 4px var(--color-accent, #ffd70033);
+  border: 1.5px solid var(--color-accent, #ffd70055);
+}
+.masonry-float {
+  position: absolute;
+  left: 0; right: 0; bottom: 0; z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1.1rem 1.2rem 1.2rem 1.2rem;
+  pointer-events: none;
+}
+.masonry-title {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(24,24,24,0.72);
+  border-radius: 0.7em;
+  padding: 0.32em 0.9em 0.32em 0.9em;
+  box-shadow: 0 2px 8px #0005;
+  letter-spacing: 0.01em;
+  margin-right: 0.7em;
+  pointer-events: auto;
+  transition: background 0.2s;
+}
+.masonry-badge {
+  font-size: 0.98rem;
+  color: #181818;
+  background: linear-gradient(90deg, #ffd700 60%, #fffbe6 100%);
+  border-radius: 0.7em;
+  font-weight: 600;
+  padding: 0.32em 0.9em;
+  margin-right: 0.7em;
+  box-shadow: 0 2px 8px #ffd70033;
+  pointer-events: auto;
+  transition: background 0.2s;
+}
+.masonry-view {
+  opacity: 0;
+  transform: translateY(18px) scale(0.92);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: auto;
+  margin-left: auto;
+  filter: drop-shadow(0 2px 8px #ffd70055);
+}
+.masonry-card:hover .masonry-view {
+  opacity: 1;
+  transform: translateY(0) scale(1.08);
+}
+.masonry-card:hover .masonry-title,
+.masonry-card:hover .masonry-badge {
+  background: rgba(24,24,24,0.92);
+}
+@keyframes fadeInMasonry {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 700px) {
+  .masonry-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .masonry-card img {
+    height: 160px;
+  }
+  .masonry-float {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4em;
+  }
+}
+
+/* Flip card styles */
+.flip-card {
+  perspective: 1200px;
+  background: none;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  min-height: 220px;
+}
+.masonry-card.flip-card {
+  cursor: pointer;
+}
+.masonry-card.flip-card:focus {
+  outline: 2px solid #ffd70055;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+  border-radius: 1.2rem;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+.flip-card-front {
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.flip-card-front img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  background: var(--bg-secondary);
+}
+.flip-card-back {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.22rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  border-radius: 12px;
+  padding: 2.2rem 1.2rem;
+  text-align: center;
+}
+/* Remove any overlay or floating title from the front */
+.masonry-title, .masonry-float, .flip-app-label, .flip-app-type {
+  display: none !important;
+}
+@media (max-width: 700px) {
+  .flip-card-front img, .flip-card-front, .flip-card {
+    height: 160px;
+    min-height: 160px;
+  }
+  .flip-card-back {
+    padding: 1.2rem 0.7rem;
+  }
+}
+
+/* Flip card style for process-step cards */
+.process-step.flip-card {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  overflow: hidden;
+  min-height: 220px;
+  padding: 0;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.process-step.flip-card .flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+  border-radius: 12px;
+}
+.process-step.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.process-step.flip-card .flip-card-front,
+.process-step.flip-card .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2.2rem 1.2rem;
+}
+.process-step.flip-card .flip-card-front {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  z-index: 2;
+}
+.process-step.flip-card .flip-card-back {
+  background: var(--bg-secondary);
+  z-index: 3;
+  transform: rotateY(180deg);
+  padding: 0;
+}
+.process-step.flip-card .flip-card-back img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+.process-step.flip-card a[aria-label] {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 12px;
+}

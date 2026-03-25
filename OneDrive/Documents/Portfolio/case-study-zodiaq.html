@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZODIAQ | Astrology Consultation UX — Sanjana Gupta</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+
+    <style>
+        :root {
+            --jakarta: 'Plus Jakarta Sans', sans-serif;
+            --instrument: 'Instrument Serif', serif;
+            --accent-zodiaq: #C8842D;
+            --bg-ambient: #F7F7F7;
+        }
+
+        body { 
+            font-family: var(--jakarta); 
+            background: var(--bg-primary); 
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120vw;
+            height: 120vh;
+            background: radial-gradient(circle at 20% 30%, rgba(200,132,45,0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(200,132,45,0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cs-hero {
+            padding: 140px 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cs-hero__back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 48px;
+            transition: color 0.2s ease;
+        }
+        .cs-hero__back:hover { color: var(--accent-zodiaq); }
+
+        .cs-hero__tag {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .cs-hero__title {
+            font-size: clamp(40px, 8vw, 84px);
+            line-height: 1.05;
+            color: var(--text-primary);
+            max-width: 900px;
+            margin-bottom: 32px;
+            font-weight: 600;
+            letter-spacing: -2.5px;
+        }
+
+        .cs-hero__title em {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--accent-zodiaq);
+            letter-spacing: 0;
+            padding-right: 4px;
+        }
+
+        .cs-hero__subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.6;
+            margin-bottom: 56px;
+            font-weight: 400;
+        }
+
+        .cs-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .cs-meta-item__label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .cs-meta-item__value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .cs-body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .cs-section { margin-bottom: 80px; }
+
+        .cs-section__num {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-zodiaq);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .cs-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .cs-section p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .cs-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 24px;
+        }
+
+        .cs-section ul li {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .cs-section ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-zodiaq);
+            border-radius: 50%;
+        }
+
+        .cs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cs-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .cs-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .cs-table tr:last-child td { border-bottom: none; }
+
+        /* Style Guide Colors */
+        .style-guide {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .style-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .style-card__label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .color-swatch--primary { background: #C8842D; }
+        .color-swatch--secondary { background: #A0692A; }
+
+        .style-card__value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .live-link-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent-zodiaq);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+        .live-link-pill:hover { transform: translateY(-2px); }
+
+        /* Live Browser Embed */
+        .live-browser {
+            width: 100%;
+            height: 750px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            margin-top: 60px;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+        }
+
+        .live-browser iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .cs-hero__title { font-size: 36px; }
+            .cs-meta-row { gap: 24px; }
+            .live-browser { height: 450px; }
+            .style-guide { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .cs-hero__title { font-size: 32px; }
+            .cs-meta-row { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .cs-meta-item { width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+            .live-browser { height: 320px; }
+            .live-link-pill { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+
+<body data-theme="dark">
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <span id="loaderText">ZODIAQ...</span>
+    </div>
+
+    <!-- Magnetic Glowing Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <a href="index.html" class="nav__logo magnetic">Sanjana.</a>
+        <div class="nav__links">
+            <a href="index.html#work" class="nav__link magnetic hoverable">Work</a>
+            <a href="index.html#about" class="nav__link magnetic hoverable">About</a>
+            <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
+            <button class="theme-btn magnetic hoverable" id="themeToggle" aria-label="Toggle Theme">
+                <span id="themeLabel">☾ Dark</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="smooth-wrapper">
+        <div class="container">
+            <header class="cs-hero reveal">
+                <a href="index.html" class="cs-hero__back">← Back to work</a>
+                <span class="cs-hero__tag">Freelance · Astrology Platform · 2025</span>
+                <h1 class="cs-hero__title">ZODIAQ: Astrology made <em>simple.</em></h1>
+                <p class="cs-hero__subtitle">I designed a complete astrology consultation platform from scratch — covering live consultations, Kundali generation, horoscopes, and astrologer dashboards. Built for both users and astrologers.</p>
+                
+                <div class="cs-meta-row">
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Role</div>
+                        <div class="cs-meta-item__value">Freelance UI/UX Designer</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Duration</div>
+                        <div class="cs-meta-item__value">7 Weeks</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Tools</div>
+                        <div class="cs-meta-item__value">Figma</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Status</div>
+                        <a href="https://www.myzodiaq.in/en" target="_blank" style="text-decoration: none;">
+                            <div class="cs-meta-item__value" style="color: var(--accent-zodiaq);">Live ↗</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual Preview -->
+                <div class="live-browser reveal">
+                    <img src="assets/f8d8ff226152971.6829e037ab714.webp" alt="ZODIAQ Platform Preview" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
+                    <div style="position: absolute; bottom: 32px; left: 32px;">
+                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">Explore Live Site ↗</a>
+                    </div>
+                </div>
+            </header>
+
+            <main class="cs-body">
+
+                <!-- What is ZODIAQ -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">01 / Overview</span>
+                    <h2>What is ZODIAQ?</h2>
+                    <p>ZODIAQ is a responsive astrology website where users can explore their daily horoscope, birth chart (Kundali), love compatibility, zodiac traits, and book live consultations with verified astrologers — all in one place.</p>
+                    <p>Most astrology websites feel outdated or cluttered. ZODIAQ was designed to be <strong>calm, modern, and beginner-friendly</strong> — something that works well on both desktop and mobile. It’s not just about predictions, it’s about creating a personal connection with the stars.</p>
+                </section>
+
+                <!-- My Responsibilities -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">02 / My Work</span>
+                    <h2>What I did on this project.</h2>
+                    <ul>
+                        <li>Studied what other astrology apps are doing (good and bad)</li>
+                        <li>Designed wireframes for all key flows</li>
+                        <li>Created all final UI screens in Figma</li>
+                        <li>Collected user feedback and made improvements</li>
+                        <li>Designed both the user side and the astrologer dashboard</li>
+                    </ul>
+                </section>
+
+                <!-- Problem -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">03 / Problem</span>
+                    <h2>What’s wrong with existing astrology apps?</h2>
+                    <p>Many astrology websites today are either too complicated, visually outdated, or filled with too much information that confuses new users.</p>
+                    <ul>
+                        <li>Users struggle to find trusted astrologers and can’t tell who’s genuine</li>
+                        <li>Booking a consultation is confusing — unclear pricing, too many steps</li>
+                        <li>Understanding a birth chart is hard due to poor layouts</li>
+                        <li>Astrologers don’t have a proper space to manage clients, generate reports, or track bookings</li>
+                    </ul>
+                </section>
+
+                <!-- Goals -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">04 / Goals</span>
+                    <h2>What I wanted to achieve.</h2>
+                    <ul>
+                        <li>Make astrology simple and accessible — especially for beginners</li>
+                        <li>Build trust through clean design and verified astrologer profiles</li>
+                        <li>Let users easily book consultations, generate Kundalis, and read horoscopes</li>
+                        <li>Give astrologers useful tools — Kundali maker, CRM, Panchang finder, Vastu analysis</li>
+                        <li>Design a fully responsive website for both mobile and desktop</li>
+                        <li>Create smooth onboarding for both users and astrologers</li>
+                    </ul>
+                </section>
+
+                <!-- Competitive Analysis -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">05 / Research</span>
+                    <h2>What I learned from competitors.</h2>
+                    <p>I studied three major platforms to understand what they do well and where they fall short:</p>
+                    
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>AstroSage</th>
+                                <th>AstroSure</th>
+                                <th>AstroTalk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>UI Design</strong></td>
+                                <td>Outdated & crowded</td>
+                                <td>Clean & modern</td>
+                                <td>Basic, not engaging</td>
+                            </tr>
+                            <tr>
+                                <td><strong>User Experience</strong></td>
+                                <td>Confusing navigation</td>
+                                <td>Smooth & friendly</td>
+                                <td>Average, lacks personal touch</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Live Consultation</strong></td>
+                                <td>Available but clunky</td>
+                                <td>Not available</td>
+                                <td>Easy booking + live chat</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reports</strong></td>
+                                <td>Many but hard to find</td>
+                                <td>Fewer options</td>
+                                <td>Well-packaged & detailed</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile</strong></td>
+                                <td>Cluttered</td>
+                                <td>Good</td>
+                                <td>Accessible</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>Key pain points I found:</strong></p>
+                    <ul>
+                        <li>Users find most interfaces visually overwhelming and hard to navigate</li>
+                        <li>It’s hard to find relevant information quickly on content-heavy platforms</li>
+                        <li>Consultation booking flows are complicated or unreliable</li>
+                    </ul>
+                </section>
+
+                <!-- Design Process -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">06 / Process</span>
+                    <h2>How I approached the design.</h2>
+                    <p>I followed a step-by-step approach, keeping the user at the center of every decision:</p>
+                    <ul>
+                        <li><strong>Understanding the domain</strong> — Learned about astrology terminology, user expectations, and what makes people trust an astrologer</li>
+                        <li><strong>User research & competitor analysis</strong> — Studied AstroSage, AstroTalk, AstroSure to find gaps</li>
+                        <li><strong>Client meetings & brainstorming</strong> — Aligned on features, priorities, and user flows</li>
+                        <li><strong>Wireframing</strong> — Sketched out all key screens before jumping to final UI</li>
+                        <li><strong>Final UI design</strong> — High-fidelity screens in Figma with consistent design system</li>
+                        <li><strong>Feedback & revisions</strong> — Collected feedback and refined the designs</li>
+                    </ul>
+                </section>
+
+                <!-- Design Decisions -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">07 / Design Decisions</span>
+                    <h2>Why things look the way they do.</h2>
+                    <div style="margin: 40px 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border);">
+                        <img src="assets/f8d8ff226152971.6829e037ab714.webp" alt="Zodiaq UI Screen Previews" style="width: 100%; display: block;">
+                    </div>
+                    <p>Every design choice was made to keep things clean and build trust:</p>
+                    
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Element</th>
+                                <th>What I Did</th>
+                                <th>Why</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Smart Filters</strong></td>
+                                <td>Filter by concern (Career, Love, Health)</td>
+                                <td>Helps users find the right astrologer fast without scrolling endlessly</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Booking UI</strong></td>
+                                <td>One-tap video/audio call</td>
+                                <td>People looking for guidance don’t want to fill 5 forms first</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Color Palette</strong></td>
+                                <td>Warm earth tones (brown/amber)</td>
+                                <td>Feels calm and spiritual — not like a flashy gaming app</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verification Badges</strong></td>
+                                <td>Star rating system for astrologers</td>
+                                <td>Users can immediately see who’s verified and trusted</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Style Guide -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">08 / Style Guide</span>
+                    <h2>Colors & Typography.</h2>
+                    <div class="style-guide">
+                        <div class="style-card">
+                            <div class="style-card__label">Primary Color</div>
+                            <div class="color-swatch color-swatch--primary"></div>
+                            <div class="style-card__value">#C8842D</div>
+                        </div>
+                        <div class="style-card">
+                            <div class="style-card__label">Secondary Color</div>
+                            <div class="color-swatch color-swatch--secondary"></div>
+                            <div class="style-card__value">#A0692A</div>
+                        </div>
+                    </div>
+                    <p><strong>Font:</strong> Roboto — Used in Bold, Semibold, Medium, and Regular weights. Clean and readable across all screen sizes.</p>
+                </section>
+
+                <!-- Challenges -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">09 / Challenges</span>
+                    <h2>What was hard about this project.</h2>
+                    <p>One of the biggest challenges was finding the right balance between looking beautiful and being easy to use. Astrology platforms often use rich, decorative visuals to create a mystical vibe — but too many design elements started hurting readability and making the booking flow harder to follow.</p>
+                    <p>I had to strip back some of my initial ideas and focus on what actually helped the user complete their task.</p>
+                </section>
+
+                <!-- Outcome -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">10 / What I Learned</span>
+                    <h2>This project taught me a lot.</h2>
+                    <p>Designing ZODIAQ was one of my most meaningful projects. It challenged me to design for a niche audience, simplify complex information (like Kundali charts and Panchang data), and create an experience that feels trustworthy.</p>
+                    <p>From the first brainstorming session to collecting final feedback — every step of the process taught me how to balance visual design with real usability. I’m proud of how the final product turned out.</p>
+                    <div style="margin-top: 40px;">
+                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill">Explore Live Platform ↗</a>
+                    </div>
+                </section>
+            </main>
+
+                <footer style="padding: 120px 0; border-top: 1px solid var(--border); text-align: center;">
+                    <span class="cs-hero__tag">Next Case Study</span>
+                    <a href="case-study-pawaac.html" style="font-size: 32px; font-weight: 700; color: var(--text-primary); text-decoration: none; display: block; margin-top: 16px; margin-bottom: 60px;">PAWAAC &rarr;</a>
+                    
+                    <div style="display: flex; gap: 32px; justify-content: center; margin-bottom: 60px;">
+                        <a href="mailto:sanjanagupta1502@gmail.com" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">Email ↗</a>
+                        <a href="https://www.linkedin.com/in/sanjanagupta1502/" target="_blank" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">LinkedIn ↗</a>
+                        <a href="https://behance.net/sanjanagupta18" target="_blank" class="magnetic hoverable" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); text-decoration: none;">Behance ↗</a>
+                    </div>
+
+                    <div style="padding-top: 40px; border-top: 1px solid var(--border); opacity: 0.5; font-size: 11px; letter-spacing: 1px;">
+                        © <span class="current-year">2026</span> SANJANA GUPTA | BLENDING LOGIC WITH EMOTION
+                    </div>
+                </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/cursor.js"></script>
+    <script src="js/nav.js"></script>
+    <script>
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('is-inview');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('loader--hidden');
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

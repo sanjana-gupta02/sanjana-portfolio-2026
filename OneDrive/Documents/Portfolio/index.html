@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sanjana Gupta — UI/UX Designer with engineering roots. Building human-centered products across SaaS, Fintech, Defense & Consumer platforms. B.Tech CS, Software Engineer @ Capgemini.">
+    <title>Sanjana Gupta — Product Designer & UX Engineer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/carousel.css" />
+    <link rel="stylesheet" href="css/masonry.css" />
+    
+    <!-- WCAG 2.2 Global Compliance Architecture -->
+    <style>
+        /* AA Color Contrast Minimums */
+        :root {
+            --text-muted: #a1a1aa !important; /* Upgraded for 4.5:1 contrast vs dark */
+        }
+        [data-theme="light"] {
+            --text-muted: #52525b !important; /* Upgraded for 4.5:1 contrast vs light */
+        }
+        
+        /* Global Keyboard Navigation Visibility */
+        a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+            outline: 2px solid var(--text-primary) !important;
+            outline-offset: 4px !important;
+            border-radius: 4px;
+        }
+        
+        /* Skip Link for Screen Readers / Motor Impaired users */
+        .skip-to-content {
+            position: absolute;
+            top: -100px;
+            left: 20px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            padding: 12px 24px;
+            font-weight: 600;
+            z-index: 999999;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+        .skip-to-content:focus {
+            top: 20px;
+        }
+
+        /* Vestibular Accessibility (Reduced Motion) */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .hover-zoom, .magnetic { transform: none !important; }
+            .cursor-dot { display: none !important; }
+            
+            /* Immediately execute entry animations */
+            .reveal, .reveal.is-inview { opacity: 1 !important; transform: none !important; }
+            .jig-piece { fill-opacity: 0 !important; }
+        }
+
+        /* ----------------------------------------------------
+           GLOBAL & MOBILE RESPONSIVENESS OVERRIDES
+           Resolves critical grid constraints & overflows
+        ---------------------------------------------------- */
+        html, body {
+            overflow-x: clip !important; /* 'clip' structurally prevents horizontal scrolling WITHOUT breaking position:sticky! */
+            width: 100% !important;
+            position: relative;
+        }
+
+        /* Essential Utility Overrides */
+        .btn-circle { white-space: nowrap !important; } /* Force CONNECT arrow to stay inline */
+        a[href^="mailto:"] { word-break: break-all !important; font-size: clamp(16px, 6vw, 4rem) !important; } /* Stop email string from bleeding */
+        
+        @media (max-width: 900px) {
+            /* 0. Universal Container Padding Recovery (Prevents flush edge-sticking) */
+            .container { padding-left: 24px !important; padding-right: 24px !important; }
+
+            /* 1. Global Navigation */
+            .nav { padding: 0 16px !important; }
+            .nav__links { gap: 12px !important; }
+            .nav__link { font-size: 12px !important; }
+            
+            /* 2. Hero Structural Fixes */
+            .hero > .container {
+                grid-template-columns: 1fr !important; /* Force single column */
+                gap: 20px !important;
+                padding-top: 40px !important;
+            }
+            .hero > .container > .hero-rail-left,
+            .hero > .container > div:first-child,
+            .hero > .container > div:last-child {
+                display: none !important; /* Hide decorative vertical rails */
+            }
+            
+            /* 3. Typography Clashing Fixes */
+            .hero h1 {
+                letter-spacing: -2px !important;
+                line-height: 0.9 !important;
+            }
+            
+            /* 4. Action Button Stacking */
+            .hero-actions {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 16px !important;
+            }
+            .hero-actions a {
+                width: 100%;
+                max-width: 350px;
+                text-align: center;
+            }
+
+            /* 5. Process Blueprint (Left-Aligned Mobile Animation Timeline) */
+            .node-row {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+                text-align: left !important;
+                margin-bottom: 80px !important;
+                padding-left: 32px !important; /* Space for the vertical line */
+                position: relative;
+            }
+            .node-label, .node-info {
+                text-align: left !important;
+                transform: translateX(40px) !important; /* Start shift left for fade-in */
+                opacity: 0 !important;
+                transition: transform 1s var(--ease-out) 0.2s, opacity 1s var(--ease-out) 0.2s !important;
+            }
+            .node-row.is-inview .node-label, 
+            .node-row.is-inview .node-info {
+                transform: translateX(0) !important;
+                opacity: 1 !important;
+            }
+            .node-info > div { justify-content: flex-start !important; }
+            .spine-draw {
+                display: block !important;
+                left: 0 !important;
+                transform: none !important;
+            }
+            .node-dot-housed {
+                display: block !important;
+                left: 0 !important;
+                transform: translate(-50%, -50%) scale(0) !important;
+                transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s !important;
+            }
+            .node-row.is-inview .node-dot-housed {
+                transform: translate(-50%, -50%) scale(1) !important;
+            }
+
+            /* 8. Selected Projects (Touch Availability) */
+            .work-row {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                padding: 40px 0 !important;
+                gap: 24px !important;
+            }
+            .work-row__info { width: 100% !important; flex: none !important; }
+            .work-row__image {
+                position: relative !important;
+                top: 0 !important; right: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16/9 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            /* 6. About Section */
+            #about > div > div {
+                grid-template-columns: 1fr !important; /* Stack text above puzzle */
+                gap: 40px !important;
+                text-align: center !important;
+            }
+            .about-text-group { margin: 0 auto !important; }
+            .about-text-group > div { justify-content: center !important; }
+
+            /* 7. Footer Architecture Collapse */
+            .footer-reimagined > div {
+                grid-template-rows: auto auto !important;
+                padding: 60px 20px !important;
+            }
+            .footer-reimagined > div > div:first-child {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 40px;
+                padding-bottom: 40px !important;
+            }
+            .footer-hero { max-width: 100% !important; }
+            .footer-reimagined > div > div:nth-child(2) {
+                grid-template-columns: 1fr !important; /* Stack footer links vertically */
+                gap: 40px !important;
+            }
+
+            /* 9. Strategic Stack Centering */
+            .weightless-category {
+                align-items: center !important;
+                text-align: center !important;
+                border-left: none !important;
+                border-top: 1px solid var(--border);
+                padding: 40px 0 !important;
+            }
+            .weightless-category > div[style*="font-size: 8px"] {
+                margin-bottom: 24px !important;
+            }
+            .weightless-category .flex {
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- WCAG Screen Reader Anchor -->
+    <a href="#main-content" class="skip-to-content">Skip to Main Content</a>    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <span id="loaderText">SANJANA...</span>
+    </div>
+
+    <!-- Magnetic Glowing Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <a href="/" class="nav__logo magnetic">Sanjana.</a>
+        <div class="nav__links">
+            <a href="#work" class="nav__link magnetic hoverable">Work</a>
+            <a href="#about" class="nav__link magnetic hoverable">About</a>
+            <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
+            <!-- Proper visible theme toggle -->
+            <button class="theme-btn magnetic hoverable" id="themeToggle" aria-label="Toggle Theme">
+                <span id="themeLabel">☾ Dark</span>
+            </button>
+        </div>
+    </nav>
+    <main id="main-content" role="main">
+        <!-- Reimagined Hero: The Kinetic Identity Hub -->
+        <header class="hero" style="padding: 100px 0; min-height: 100vh; display: flex; align-items: center; position: relative; border-bottom: 1px solid var(--border); overflow: hidden;" aria-label="Professional Introduction">
+            
+            <!-- Global SVG Circuit Decoration -->
+            <svg style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.1;" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                <line x1="100" y1="0" x2="100" y2="1000" stroke="white" stroke-width="0.5" stroke-dasharray="10 10" />
+                <line x1="0" y1="500" x2="1000" y2="500" stroke="white" stroke-width="0.5" stroke-dasharray="10 10" />
+                <circle cx="500" cy="500" r="300" stroke="white" stroke-width="1" fill="none" opacity="0.3" />
+            </svg>
+
+            <div class="container" style="display: grid; grid-template-columns: 100px 1fr 100px; gap: 40px; align-items: center; position: relative; z-index: 2;">
+                
+                <!-- Left Rail: Vertical Serial Data -->
+                <div class="reveal" style="writing-mode: vertical-rl; transform: rotate(180deg); display: flex; justify-content: space-between; height: 100%; border-right: 1px solid var(--border); padding-right: 24px;">
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">ID: SANJANA_GUPTA_V3</span>
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">LOC: VRN / UP</span>
+                </div>
+
+                <!-- Center: Multi-Layered Identity Core -->
+                <div class="hero-center" style="position: relative; text-align: center;">
+                    <div class="reveal" style="margin-bottom: 32px;">
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            I DESIGN <br> 
+                            <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); text-transform: lowercase;">products</i>
+                        </h1>
+                    </div>
+
+                    <!-- The Identity Hub (Small Centerpiece) -->
+                    <div class="reveal zoom-in" style="width: 200px; height: 200px; margin: 0 auto 32px; position: relative; padding: 20px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.01); backdrop-filter: blur(10px);">
+                        <div style="width: 100%; height: 100%; border-radius: 50%; overflow: hidden; position: relative; border: 1px solid var(--accent);">
+                            <img src="assets/profile.jpg" alt="Sanjana Gupta" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.8);">
+                        </div>
+                    </div>
+
+                    <div class="reveal" style="margin-top: 32px;">
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            PEOPLE <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text-primary); text-transform: lowercase;">actually</i> USE.
+                        </h1>
+                    </div>
+
+                    <div style="max-width: 700px; margin: 40px auto;" class="reveal fade-up">
+                        <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
+                            A Product Designer with an engineering foundation @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis</strong>.<br>
+                            Specialized in high-end design systems for SaaS, Fintech & Defense.
+                        </p>
+                    </div>
+
+                    <div class="hero-actions" style="display: flex; gap: 24px; justify-content: center; margin-top: 48px;">
+                        <a href="#work" class="btn-primary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">SEE WORK</a>
+                        <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-secondary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">RESUME</a>
+                    </div>
+                </div>
+
+                <!-- Right Rail: Dynamic Metrics -->
+                <div class="reveal" style="writing-mode: vertical-rl; display: flex; justify-content: space-between; height: 100%; border-left: 1px solid var(--border); padding-left: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px;">25+ SHIPPED</span>
+                        <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px;">4+ INDUSTRIES</span>
+                        <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px;">3+ YEARS EXP</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Status Strip -->
+        <div class="status-strip reveal" aria-label="Professional Status and Focus Areas">
+            <div class="status-strip__track">
+                <div class="status-item"><span></span> PRODUCT DESIGN</div>
+                <div class="status-item"><span></span> USER RESEARCH</div>
+                <div class="status-item"><span></span> DESIGN SYSTEMS</div>
+                <div class="status-item"><span></span> INTERACTION DESIGN</div>
+                <div class="status-item status-item--available"><span></span> AVAILABLE FOR WORK</div>
+                <div class="status-item"><span></span> PRODUCT DESIGN</div>
+                <div class="status-item"><span></span> USER RESEARCH</div>
+                <div class="status-item"><span></span> DESIGN SYSTEMS</div>
+                <div class="status-item"><span></span> INTERACTION DESIGN</div>
+                <div class="status-item status-item--available"><span></span> AVAILABLE FOR WORK</div>
+            </div>
+        </div>
+
+        <!-- Elegant Work List -->
+        <section id="work" class="work-list container" style="padding: 120px 0;">
+            <h2 class="work-list__header reveal">Selected Projects</h2>
+            
+            <div class="work-list__items">
+                <!-- Project 01 -->
+                <a href="case-study-pawaac.html" class="work-row reveal magnetic hoverable">
+                    <div class="work-row__info">
+                        <span class="work-row__num">01</span>
+                        <h2 class="work-row__title">PAWAAC</h2>
+                        <span class="work-row__tag">Website · Defense Tech</span>
+                    </div>
+                    <div class="work-row__image">
+                        <img src="assets/pawaac_hero.png" alt="Sentrivion UI" style="object-position: top left;">
+                    </div>
+                </a>
+
+                <!-- Project 02 -->
+                <a href="case-study-zodiaq.html" class="work-row reveal magnetic hoverable">
+                    <div class="work-row__info">
+                        <span class="work-row__num">02</span>
+                        <h2 class="work-row__title"><em>Zodiaq</em></h2>
+                        <span class="work-row__tag">Freelance · Astrology Platform</span>
+                    </div>
+                    <div class="work-row__image">
+                        <img src="assets/f8d8ff226152971.6829e037ab714.webp" alt="Zodiaq UI">
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Other Projects from Behance -->
+            <section class="work-list__other-projects-masonry reveal" style="margin-top: 120px; padding-top: 80px; border-top: 1px solid var(--border);">
+                <div class="masonry-intro" style="margin-bottom: 40px;">
+                    <h3 class="work-list__header" style="margin-top:2.5rem;">Other Projects</h3>
+                </div>
+                <div class="masonry-grid" id="otherProjectsMasonry">
+                    <!-- Admin Panel Dashboard -->
+                    <a href="https://www.behance.net/gallery/221916723/Admin-Panel-Dashboard" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>Admin Panel Dashboard</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/0c560c221916723.Y3JvcCwxNjE2LDEyNjQsMCww.png" alt="Admin Panel Dashboard">
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Summer Training Website -->
+                    <a href="https://www.behance.net/gallery/211928645/Summer-Training-Website" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>Summer Website Design</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/4249ab211928645.Y3JvcCw4MDgsNjMyLDAsMA.png" alt="Summer Website Design">
+                            </div>
+                        </div>
+                    </a>
+                    <!-- MyCouponStock -->
+                    <a href="https://www.behance.net/gallery/212603959/ReDesigning-MyCouponStock-A-Quick-Case-Study" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>MyCouponStock Redesign</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/472816212603959.Y3JvcCwxNzQwLDEzNjEsMTUwLDQz.png" alt="MyCouponStock">
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Landing Page Design -->
+                    <a href="https://www.behance.net/gallery/212077853/Landing-Page-Design" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>Landing Page Design</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/8debd5212077853.Y3JvcCwyMjc3LDE3ODEsMCw2Nw.png" alt="Landing Page Design">
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Financial Planning Dashboard -->
+                    <a href="https://www.behance.net/gallery/212007229/Financial-Planning-Dashboard" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>Financial Dashboard</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/c4a8ab212007229.Y3JvcCwxNzkxLDE0MDAsMCww.png" alt="Financial Dashboard">
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Mobile Web UI -->
+                    <a href="https://www.behance.net/gallery/211917417/Mobile-Web-UI" target="_blank" class="flip-reveal-card reveal magnetic hoverable">
+                        <div class="flip-reveal-inner">
+                            <div class="flip-reveal-back">
+                                <h3>Mobile Web UI</h3>
+                            </div>
+                            <div class="flip-reveal-front">
+                                <img src="https://mir-s3-cdn-cf.behance.net/projects/max_808_webp/c1b67f211917417.Y3JvcCwxNDQwLDExMjYsMCww.png" alt="Mobile Web UI">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </section>
+
+        <!-- Process Section: Strategic Project Blueprint (Advanced Motion Edition) -->
+        <section id="process" class="process container reveal" style="padding: 160px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+            <div style="margin-bottom: 120px;" class="reveal fade-up">
+                <span class="hero__overhead" style="margin-bottom: 20px; display: block; letter-spacing: 4px;">PROJECT BLUEPRINT</span>
+                <h2 style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.85; color: var(--text-primary);">How I Build Your <br> <i style="color: var(--accent); font-family: 'Instrument Serif', serif; font-style: italic;">Vision.</i></h2>
+                <p style="margin-top: 32px; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4;">A Phase-Gated Delivery Framework.</p>
+            </div>
+
+            <div class="process-node-flow" style="position: relative; max-width: 1000px; margin: 0 auto;">
+                <!-- Self-Drawing Spine -->
+                <div class="reveal spine-draw" style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--accent), var(--border), transparent); transform: translateX(-50%); z-index: 1;"></div>
+
+                <!-- Stage 01: Discovery -->
+                <div class="reveal node-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 150px; position: relative; transition: all 1s var(--ease-out);">
+                    <div class="node-label" style="text-align: right; transform: translateX(-40px); opacity: 0; transition: all 1s var(--ease-out) 0.2s;">
+                        <span style="font-family: 'Instrument Serif', serif; font-size: 14px; font-style: italic; color: var(--accent); display: block; margin-bottom: 8px;">STAGE 01</span>
+                        <h3 style="font-family: var(--font-display); font-size: 48px; color: var(--text-primary); margin-bottom: 0;">Discovery.</h3>
+                    </div>
+                    
+                    <div class="node-dot-housed" style="position: absolute; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s; top: 50%; z-index: 2;">
+                        <div style="width: 14px; height: 14px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent); animation: pulse-dot 2s infinite;"></div>
+                    </div>
+                    
+                    <div class="node-info" style="transform: translateX(40px); opacity: 0; transition: all 1s var(--ease-out) 0.4s;">
+                        <p style="font-size: 16px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.5;">Leading end-to-end research to identify technical constraints and user friction points before execution.</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.6s;">Stakeholder Interviews</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.7s;">Technical Audit</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.8s;">Journey Mapping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 02: Architecture -->
+                <div class="reveal node-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 150px; position: relative; transition: all 1s var(--ease-out);">
+                    <div class="node-info" style="text-align: right; transform: translateX(-40px); opacity: 0; transition: all 1s var(--ease-out) 0.4s;">
+                        <p style="font-size: 16px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.5;">Building scalable systems through design tokens and component-driven development workflows.</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;">
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.6s;">Design Tokens</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.7s;">UX Testing</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.8s;">Feasibility</span>
+                        </div>
+                    </div>
+                    
+                    <div class="node-dot-housed" style="position: absolute; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s; top: 50%; z-index: 2;">
+                        <div style="width: 14px; height: 14px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent);"></div>
+                    </div>
+
+                    <div class="node-label" style="text-align: left; transform: translateX(40px); opacity: 0; transition: all 1s var(--ease-out) 0.2s;">
+                        <span style="font-family: 'Instrument Serif', serif; font-size: 14px; font-style: italic; color: var(--accent); display: block; margin-bottom: 8px;">STAGE 02</span>
+                        <h3 style="font-family: var(--font-display); font-size: 48px; color: var(--text-primary); margin-bottom: 0;">Architecture.</h3>
+                    </div>
+                </div>
+
+                <!-- Stage 03: Implementation -->
+                <div class="reveal node-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; transition: all 1s var(--ease-out);">
+                    <div class="node-label" style="text-align: right; transform: translateX(-40px); opacity: 0; transition: all 1s var(--ease-out) 0.2s;">
+                        <span style="font-family: 'Instrument Serif', serif; font-size: 14px; font-style: italic; color: var(--accent); display: block; margin-bottom: 8px;">STAGE 03</span>
+                        <h3 style="font-family: var(--font-display); font-size: 48px; color: var(--text-primary); margin-bottom: 0;">Refinement.</h3>
+                    </div>
+                    
+                    <div class="node-dot-housed" style="position: absolute; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s; top: 50%; z-index: 2;">
+                        <div style="width: 14px; height: 14px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent); animation: pulse-dot 2s infinite;"></div>
+                    </div>
+                    
+                    <div class="node-info" style="transform: translateX(40px); opacity: 0; transition: all 1s var(--ease-out) 0.4s;">
+                        <p style="font-size: 16px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.5;">Bridging the handoff gap with production-ready assets and engineering best practices.</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.6s;">Frontend Handoff</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.7s;">Performance Audit</span>
+                            <span class="mini-tag" style="font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.05); padding: 8px 16px; border-radius: 99px; color: var(--text-muted); background: rgba(255,255,255,0.01); transform: translateY(10px); opacity: 0; transition: all 0.5s ease 0.8s;">Iterative Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
+        </section>
+
+        <!-- Experience / My Journey Section -->
+        <section id="experience" class="container reveal" style="padding: 120px 0;">
+            <div class="experience-stacked-container">
+                <div class="experience-header-sticky">
+                    <span class="hero__overhead" style="margin-bottom: 8px; display: block;">WHY CHOOSE ME</span>
+                    <h2 style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(3.5rem, 6vw, 5.5rem); margin-bottom: 0; line-height: 1; letter-spacing: -1px; color: var(--text-primary);">My Journey</h2>
+                </div>
+                
+                <div class="experience-cards">
+                    <!-- Card 1: SE @ Capgemini -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">June 2025 — Present</span>
+                            <span class="experience-card__duration">10 MONTHS</span>
+                        </div>
+                        <h3 class="experience-card__role">Software Engineer</h3>
+                        <span class="experience-card__company">Capgemini</span>
+                        <p class="experience-card__desc">Architecting robust enterprise solutions with a focus on modular code and scalable UI components. Bridging technical precision with user-centered design excellence.</p>
+                    </div>
+
+                    <!-- Card 2: Capgemini Intern -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">April 2025 — May 2025</span>
+                            <span class="experience-card__duration">2 MONTHS</span>
+                        </div>
+                        <h3 class="experience-card__role">Software Engineer Intern</h3>
+                        <span class="experience-card__company">Capgemini</span>
+                        <p class="experience-card__desc">Developed responsive dashboards and improved interface reliability for manufacturing standards in the automotive sector.</p>
+                    </div>
+
+                    <!-- Card 3: TechPath UI/UX -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">Mar 2024 — Mar 2025</span>
+                            <span class="experience-card__duration">1 YEAR</span>
+                        </div>
+                        <h3 class="experience-card__role">UI/UX Intern</h3>
+                        <span class="experience-card__company">Techpath</span>
+                        <p class="experience-card__desc">Led the redesign of client dashboards. Conducted research to identify friction points, resulting in a streamlined user journey.</p>
+                    </div>
+
+                    <!-- Card 4: Sowl GD -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">Mar 2024 — Apr 2024</span>
+                            <span class="experience-card__duration">2 MONTHS</span>
+                        </div>
+                        <h3 class="experience-card__role">Graphic Designer Lead</h3>
+                        <span class="experience-card__company">Sowl</span>
+                        <p class="experience-card__desc">Crafted high-impact visual narratives for travel and brand content, focusing on custom typography and layout systems.</p>
+                    </div>
+
+                    <!-- Card 5: Y.M.M. GD -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">Jan 2024 — Apr 2024</span>
+                            <span class="experience-card__duration">4 MONTHS</span>
+                        </div>
+                        <h3 class="experience-card__role">Graphic Designer</h3>
+                        <span class="experience-card__company">Your Marketing Mascot</span>
+                        <p class="experience-card__desc">Focused on branding consistency and user-centric promotional design for digital marketing campaigns.</p>
+                    </div>
+
+                    <!-- Card 6: Simtrak GD -->
+                    <div class="experience-card">
+                        <div class="experience-card__top">
+                            <span class="experience-card__date">Jul 2023 — Sep 2023</span>
+                            <span class="experience-card__duration">3 MONTHS</span>
+                        </div>
+                        <h3 class="experience-card__role">Graphic Designer</h3>
+                        <span class="experience-card__company">Simtrak Solutions</span>
+                        <p class="experience-card__desc">Developed visual assets for B2B clients, refining the fundamentals of client-driven design iterations and visual hierarchy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reimagined About Dossier -->
+        <section id="about" class="container reveal" style="padding: 160px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+            <!-- Background signature effect -->
+            <div style="position: absolute; top: 80px; right: 0; font-family: 'Instrument Serif', serif; font-size: 15vw; color: rgba(255,255,255,0.02); font-style: italic; pointer-events: none; z-index: -1;">Gupta.</div>
+
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: center;">
+                    <div class="about-narrative">
+                        <span class="hero__overhead" style="margin-bottom: 12px; display: block;">THE PHILOSOPHY</span>
+                        <h2 style="font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 0.9; letter-spacing: -2px; color: var(--text-primary); margin-bottom: 32px;">
+                            Blending logic <br> with <i style="color: var(--accent); font-family: 'Instrument Serif', serif; font-style: italic;">emotion.</i>
+                        </h2>
+                        
+                        <div class="about-text-group" style="max-width: 550px;">
+                            <p style="font-size: 19px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4; font-weight: 400;">
+                                I am a Product Designer & Software Engineer specialized in architecting systems that <i style="font-family: 'Instrument Serif', serif; font-style: italic;">anticipate human friction.</i>
+                            </p>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.6;">
+                                With a foundation in software engineering and a deep empathy for the user journey, I bridge the void between complex technical architecture and intuitive interface design. Great products aren't just built—they are <strong style="color: var(--text-primary);">choreographed.</strong>
+                            </p>
+                            
+                            <div style="display: flex; align-items: center; gap: 32px;">
+                                <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-circle magnetic hoverable" style="width: 140px; height: 140px; text-transform: uppercase; font-size: 13px; font-weight: 500;">RESUME ↗</a>
+                                <div style="opacity: 0.4; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; line-height: 1.5;">
+                                    ARCHITECTING <br> EXCELLENCE.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-visual" style="position: relative; max-width: 400px; margin-left: auto; width: 100%;">
+                        
+                        <style>
+                            /* Authentic 9-Piece Jigsaw Interlock Animation */
+                            .jig-piece {
+                                fill: var(--bg-primary); /* Starts opaque, blocking the image */
+                                stroke: rgba(255, 255, 255, 0.25); /* The permanent geometric joints */
+                                stroke-width: 1.5px;
+                                stroke-linejoin: round;
+                                stroke-linecap: round;
+                                transition: fill-opacity 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+                            }
+                            [data-theme="light"] .jig-piece { stroke: rgba(0, 0, 0, 0.2); }
+                            
+                            /* Stagger the piece decryption reveal dynamically out from center */
+                            .jig-piece.jp5 { transition-delay: 0.1s; } /* Center piece reveals first */
+                            .jig-piece.jp2 { transition-delay: 0.2s; }
+                            .jig-piece.jp4 { transition-delay: 0.3s; }
+                            .jig-piece.jp6 { transition-delay: 0.4s; }
+                            .jig-piece.jp8 { transition-delay: 0.5s; }
+                            .jig-piece.jp1 { transition-delay: 0.6s; }
+                            .jig-piece.jp3 { transition-delay: 0.7s; }
+                            .jig-piece.jp7 { transition-delay: 0.8s; }
+                            .jig-piece.jp9 { transition-delay: 0.9s; }
+
+                            /* Reveal the photo beneath, but leave the structural outlines! */
+                            .reveal.is-inview .jig-piece { fill-opacity: 0; }
+                            
+                            .jig-svg-container {
+                                position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;
+                            }
+                        </style>
+
+                        <div style="width: 100%; border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 4/5; border: 1px solid var(--border);">
+                            <img src="assets/profile.jpg" alt="Sanjana Gupta" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); transition: transform 0.8s var(--ease-out);" class="hover-zoom">
+                            
+                            <!-- Unbreakable 9-Piece 3x3 Scalable Vector Jigsaw Framework -->
+                            <svg class="jig-svg-container" viewBox="0 0 300 400" preserveAspectRatio="none">
+                                <!-- Row 1 -->
+                                <path class="jig-piece jp1" d="M 0 0 L 100 0 L 100 35 A 15 15 0 1 1 100 65 L 100 133.33 L 65 133.33 A 15 15 0 1 1 35 133.33 L 0 133.33 Z" />
+                                <path class="jig-piece jp2" d="M 100 0 L 200 0 L 200 35 A 15 15 0 1 0 200 65 L 200 133.33 L 165 133.33 A 15 15 0 1 0 135 133.33 L 100 133.33 L 100 65 A 15 15 0 1 0 100 35 Z" />
+                                <path class="jig-piece jp3" d="M 200 0 L 300 0 L 300 133.33 L 265 133.33 A 15 15 0 1 1 235 133.33 L 200 133.33 L 200 65 A 15 15 0 1 1 200 35 Z" />
+                                
+                                <!-- Row 2 -->
+                                <path class="jig-piece jp4" d="M 0 133.33 L 35 133.33 A 15 15 0 1 0 65 133.33 L 100 133.33 L 100 180 A 15 15 0 1 0 100 210 L 100 266.66 L 65 266.66 A 15 15 0 1 0 35 266.66 L 0 266.66 Z" />
+                                <path class="jig-piece jp5" d="M 100 133.33 L 135 133.33 A 15 15 0 1 1 165 133.33 L 200 133.33 L 200 180 A 15 15 0 1 1 200 210 L 200 266.66 L 165 266.66 A 15 15 0 1 1 135 266.66 L 100 266.66 L 100 210 A 15 15 0 1 1 100 180 Z" />
+                                <path class="jig-piece jp6" d="M 200 133.33 L 235 133.33 A 15 15 0 1 0 265 133.33 L 300 133.33 L 300 266.66 L 265 266.66 A 15 15 0 1 0 235 266.66 L 200 266.66 L 200 210 A 15 15 0 1 0 200 180 Z" />
+                                
+                                <!-- Row 3 -->
+                                <path class="jig-piece jp7" d="M 0 266.66 L 35 266.66 A 15 15 0 1 1 65 266.66 L 100 266.66 L 100 330 A 15 15 0 1 1 100 360 L 100 400 L 0 400 Z" />
+                                <path class="jig-piece jp8" d="M 100 266.66 L 135 266.66 A 15 15 0 1 0 165 266.66 L 200 266.66 L 200 330 A 15 15 0 1 0 200 360 L 200 400 L 100 400 L 100 360 A 15 15 0 1 0 100 330 Z" />
+                                <path class="jig-piece jp9" d="M 200 266.66 L 235 266.66 A 15 15 0 1 1 265 266.66 L 300 266.66 L 300 400 L 200 400 L 200 360 A 15 15 0 1 1 200 330 Z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Reimagined Tools: The Compact Technical Intelligence Ribbon -->
+        <!-- Reimagined Tools: The Weightless Data Strip -->
+        <section class="tools-weightless-section container reveal" style="padding: 60px 0; border-top: 1px solid var(--border);">
+            <div style="margin-bottom: 40px; text-align: center;">
+                <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); display: block; margin-bottom: 8px;">Technical Arsenal</span>
+                <h2 style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0; color: var(--text-primary); line-height: 1;">Strategic Stack</h2>
+            </div>
+            
+            <style>
+                :root { --w-invert: 0; }
+                [data-theme="dark"] { --w-invert: 1; }
+                .w-invert { filter: invert(var(--w-invert)); }
+
+                /* Boxless minimal layout */
+                .weightless-strip {
+                    display: flex;
+                    justify-content: space-between;
+                    max-width: 1100px;
+                    margin: 0 auto;
+                    align-items: flex-start;
+                    gap: 32px;
+                }
+                
+                .weightless-category {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-left: 1px solid rgba(255, 255, 255, 0.1);
+                    padding-left: 24px;
+                    opacity: 0;
+                    transform: translateX(-15px);
+                    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                [data-theme="light"] .weightless-category { border-left-color: rgba(0, 0, 0, 0.1); }
+                
+                /* Staggered smooth entrance */
+                .reveal.is-inview .weightless-category { opacity: 1; transform: translateX(0); }
+                .reveal.is-inview .weightless-category:nth-child(1) { transition-delay: 0.1s; }
+                .reveal.is-inview .weightless-category:nth-child(2) { transition-delay: 0.2s; }
+                .reveal.is-inview .weightless-category:nth-child(3) { transition-delay: 0.3s; }
+                .reveal.is-inview .weightless-category:nth-child(4) { transition-delay: 0.4s; }
+
+                .weightless-title {
+                    font-size: 8px;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    color: var(--text-muted);
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+                
+                .weightless-icons {
+                    display: flex;
+                    gap: 16px;
+                    flex-wrap: wrap;
+                }
+                
+                .w-logo {
+                    width: 32px;
+                    height: 32px;
+                    object-fit: contain;
+                    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    /* Original Colors directly injected without fading */
+                }
+                .w-logo:hover {
+                    transform: translateY(-4px) scale(1.1);
+                }
+
+                @media(max-width: 800px) {
+                    .weightless-strip { flex-direction: column; gap: 32px; }
+                    .weightless-category { border-left: none; border-bottom: 1px solid var(--border); padding-left: 0; padding-bottom: 24px; width: 100%; transform: translateY(-15px); }
+                    .reveal.is-inview .weightless-category { transform: translateY(0); }
+                    .weightless-category:last-child { border-bottom: none; padding-bottom: 0; }
+                }
+            </style>
+
+            <div class="weightless-strip">
+                
+                <!-- Category 1 -->
+                <div class="weightless-category">
+                    <div class="weightless-title">01 / Design Architecture</div>
+                    <div class="weightless-icons">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="w-logo" title="Figma">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg" alt="Framer" class="w-logo w-invert" title="Framer">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/illustrator/illustrator-plain.svg" alt="Illustrator" class="w-logo" title="Illustrator">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg" alt="Photoshop" class="w-logo" title="Photoshop">
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="weightless-category">
+                    <div class="weightless-title">02 / Core Engineering</div>
+                    <div class="weightless-icons">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="w-logo" title="Java">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="Spring" class="w-logo" title="Spring">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angularjs/angularjs-original.svg" alt="Angular" class="w-logo" title="Angular">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" class="w-logo w-invert" title="GitHub">
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="weightless-category">
+                    <div class="weightless-title">03 / Intelligence Layer</div>
+                    <div class="weightless-icons">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="GenAI" class="w-logo w-invert" title="GenAI">
+                        <!-- 100% Unblocked jsDelivr SimpleIcons SVG -->
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/githubcopilot.svg" alt="Copilot" class="w-logo w-invert" title="Copilot">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT" class="w-logo" title="ChatGPT">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="w-logo w-invert" title="AWS">
+                    </div>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="weightless-category">
+                    <div class="weightless-title">04 / Documentation</div>
+                    <div class="weightless-icons">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/notion/notion-original.svg" alt="Notion" class="w-logo w-invert" title="Notion">
+                        <!-- Permanently fixed Notepad++ pulling from an unrestricted transparent PNG -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Notepad_plus_plus.png" alt="Notepad++" class="w-logo" style="border-radius: 4px;" title="Notepad++">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    <footer class="footer-reimagined container" id="contact" style="border-top: 1px solid var(--border); background: #080808; min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; padding: 0;">
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-rows: 1fr auto; gap: 80px; padding: 80px var(--container-pad);">
+            
+            <!-- Main Tier: Visual Impact -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 80px;">
+                <div class="footer-hero" style="max-width: 65%;">
+                    <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 24px;">AVAILABLE FOR NEW PROJECTS</p>
+                    <h2 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8rem); line-height: 0.8; letter-spacing: -4px; color: var(--text-primary);">
+                        Building things <br> <i style="color: #ff3b30; font-family: 'Instrument Serif', serif; font-style: italic;">users love.</i>
+                    </h2>
+                </div>
+                
+                <div class="footer-cta-box" style="display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="https://www.linkedin.com/in/sanjanagupta1502/" target="_blank" class="btn-circle magnetic hoverable" style="width: 180px; height: 180px; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.1); background: transparent; backdrop-filter: blur(10px);">CONNECT ↗</a>
+                </div>
+            </div>
+
+            <!-- Baseline Tier: Information Architecture -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; text-align: left;">
+                <div class="footer-col">
+                    <span style="font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 16px;">Direct Link</span>
+                    <a href="mailto:sanjanagupta1502@gmail.com" class="magnetic hoverable" style="font-size: 24px; color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 4px;">sanjanagupta1502@gmail.com</a>
+                </div>
+                
+                <div class="footer-col">
+                    <span style="font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 16px;">Social Ecosystem</span>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <a href="https://www.linkedin.com/in/sanjanagupta1502/" target="_blank" class="magnetic hoverable" style="font-size: 12px; text-transform: uppercase; color: var(--text-secondary); text-decoration: none;">LinkedIn ↗</a>
+                        <a href="https://behance.net/sanjanagupta18" target="_blank" class="magnetic hoverable" style="font-size: 12px; text-transform: uppercase; color: var(--text-secondary); text-decoration: none;">Behance ↗</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <span style="font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 16px;">Resources</span>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="magnetic hoverable" style="font-size: 12px; text-transform: uppercase; color: var(--text-secondary); text-decoration: none;">Resume ↗</a>
+                        <p style="font-size: 10px; opacity: 0.3; margin-top: 8px;">© 2026 GUPTA.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Branding Signature (DENQID STYLE) -->
+        <span style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 18vw; color: rgba(255,255,255,0.02); pointer-events: none; z-index: -1; white-space: nowrap; user-select: none;">SANJANA GUPTA</span>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script>
+        // --- 1. LOADER LOGIC ---
+        window.addEventListener('load', () => {
+            const loaderText = document.getElementById('loaderText');
+            const words = ["GUPTA.", "PORTFOLIO.", "2026."];
+            let i = 0;
+            
+            const interval = setInterval(() => {
+                if (i < words.length) {
+                    loaderText.textContent = words[i];
+                    i++;
+                }
+            }, 500);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                document.getElementById('loader').classList.add('loader--hidden');
+            }, 1800); // Faster loader
+        });
+
+        // --- 2. CUSTOM CURSOR & MAGNETIC EFFECT ---
+        const dot = document.getElementById('cursorDot');
+        const hoverables = document.querySelectorAll('.hoverable');
+        const magnetics = document.querySelectorAll('.magnetic');
+
+        window.addEventListener('mousemove', (e) => {
+            dot.style.transform = `translate(calc(-50% + ${e.clientX}px), calc(-50% + ${e.clientY}px))`;
+        });
+
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => dot.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => dot.classList.remove('hovered'));
+        });
+
+        magnetics.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const h = rect.width / 2;
+                const v = rect.height / 2;
+                const x = e.clientX - rect.left - h;
+                const y = e.clientY - rect.top - v;
+                
+                // reduced intensity for smoother feel
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = `translate(0px, 0px)`;
+            });
+        });
+
+        // --- 3. NAV SCROLL LOGIC ---
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                nav.classList.add('nav--scrolled');
+            } else {
+                nav.classList.remove('nav--scrolled');
+            }
+        });
+
+        // --- 4. SCROLL REVEAL (Reactive Version) ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-inview");
+                } else {
+                    entry.target.classList.remove("is-inview");
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // --- 5. THEME TOGGLE (Proper Fix) ---
+        const themeBtn = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        
+        themeBtn.addEventListener('click', () => {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeLabel.innerHTML = '☼ Light';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeLabel.innerHTML = '☾ Dark';
+            }
+        });
+
+        // --- 6. Masonry Animation on Scroll ---
+        const masonryCards = document.querySelectorAll('.flip-card');
+        const masonryObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, idx) => {
+                if (entry.isIntersecting && !entry.target.classList.contains('auto-flipped')) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = 1;
+                        // Auto-flip effect: flip, then flip back after 1.2s
+                        entry.target.classList.add('flipped', 'auto-flipped');
+                        setTimeout(() => {
+                            entry.target.classList.remove('flipped');
+                        }, 1200);
+                    }, idx * 320);
+                }
+            });
+        }, { threshold: 0.15 });
+        masonryCards.forEach(card => {
+            card.style.opacity = 1;
+            masonryObserver.observe(card);
+            card.addEventListener('click', function(e) {
+                // Only flip if not clicking the link itself
+                if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
+                    card.classList.toggle('flipped');
+                }
+            });
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    card.classList.toggle('flipped');
+                }
+            });
+            card.setAttribute('tabindex', '0');
+        });
+        // --- 7. 3D Tilt/Parallax Effect on Masonry Cards ---
+        masonryCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * 8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

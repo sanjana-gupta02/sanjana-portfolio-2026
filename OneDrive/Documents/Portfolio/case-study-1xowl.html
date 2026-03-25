@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1X OWL Case Study — Sanjana Gupta</title>
+    <meta name="description"
+        content="End-to-end UX design of 1X OWL — a real-money Lottery and Ludo gaming platform. Problem, process, decisions, and outcomes." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+
+    <style>
+        /* ─── Case study specific styles ─── */
+        .cs-hero {
+            padding: 140px 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cs-hero__back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 48px;
+            transition: color 0.2s ease;
+        }
+
+        .cs-hero__back:hover {
+            color: var(--text-primary);
+        }
+
+        .cs-hero__tag {
+            font-size: var(--text-xs);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .cs-hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 6vw, 72px);
+            line-height: 1.1;
+            color: var(--text-primary);
+            max-width: 760px;
+            margin-bottom: 24px;
+        }
+
+        .cs-hero__subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .cs-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .cs-meta-item {}
+
+        .cs-meta-item__label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .cs-meta-item__value {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .cs-cover {
+            width: 100%;
+            aspect-ratio: 16/7;
+            background: linear-gradient(135deg, #0F0F0E 0%, #1a1a18 50%, #0d1a2e 100%);
+            border-radius: 12px;
+            margin: 64px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cs-cover__emoji {
+            font-size: 80px;
+            opacity: 0.15;
+            position: absolute;
+        }
+
+        .cs-cover__text {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 64px);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cs-cover__sub {
+            font-size: var(--text-base);
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* Content Layout */
+        .cs-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .cs-section {
+            margin-bottom: 80px;
+        }
+
+        .cs-section__label {
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .cs-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(24px, 3vw, 36px);
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .cs-section p {
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .cs-section strong {
+            color: var(--text-primary);
+        }
+
+        /* Pull quote */
+        .cs-quote {
+            border-left: 3px solid var(--text-primary);
+            padding: 16px 24px;
+            margin: 40px 0;
+            background: var(--bg-secondary);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .cs-quote p {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            font-style: italic;
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Insights grid */
+        .cs-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .cs-insight-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .cs-insight-card__num {
+            font-family: var(--font-display);
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .cs-insight-card__label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Decision block */
+        .cs-decision {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            margin: 24px 0;
+        }
+
+        .cs-decision__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cs-decision__icon {
+            width: 32px;
+            height: 32px;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-sm);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .cs-decision__title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--text-base);
+        }
+
+        .cs-decision p {
+            font-size: var(--text-sm);
+            margin-bottom: 12px;
+        }
+
+        .cs-decision__why {
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        .cs-decision__why strong {
+            color: var(--text-primary);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Pain points list */
+        .cs-painpoints {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+        }
+
+        .cs-painpoints li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        .cs-painpoints li:last-child {
+            border-bottom: none;
+        }
+
+        .cs-painpoints__num {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--text-xs);
+            min-width: 24px;
+        }
+
+        /* Impact table */
+        .cs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: var(--text-sm);
+        }
+
+        .cs-table th {
+            text-align: left;
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .cs-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .cs-table td:first-child {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .cs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Phase progression */
+        .cs-phases {
+            display: flex;
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .cs-phase {
+            flex: 1;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cs-phase__label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .cs-phase__title {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Next case study */
+        .cs-next {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cs-next__label {
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .cs-next__link {
+            font-family: var(--font-display);
+            font-size: clamp(24px, 4vw, 48px);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .cs-next__link:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 640px) {
+            .cs-phases {
+                flex-direction: column;
+            }
+
+            .cs-meta-row {
+                gap: 20px;
+            }
+
+            .cs-body {
+                padding: 48px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- NAV -->
+    <nav class="nav" id="mainNav">
+        <div class="nav__inner container">
+            <a href="index.html" class="nav__logo">Sanjana Gupta</a>
+            <ul class="nav__links" role="list">
+                <li><a href="index.html#work" class="nav__link">Work</a></li>
+                <li><a href="index.html#about" class="nav__link">About</a></li>
+                <li><a href="https://www.behance.net/sanjanagupta18" class="nav__link" target="_blank">Behance ↗</a></li>
+            </ul>
+            <a href="assets/resume.pdf" target="_blank" rel="noopener" class="btn btn--outline nav__resume">Resume ↗</a>
+            <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span>
+            </button>
+        </div>
+        <div class="nav__mobile" id="mobileMenu" aria-hidden="true">
+            <ul role="list">
+                <li><a href="index.html#work" class="nav__mobile-link">Work</a></li>
+                <li><a href="index.html#about" class="nav__mobile-link">About</a></li>
+                <li><a href="index.html#contact" class="nav__mobile-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- CASE STUDY HERO -->
+            <div class="cs-hero fade-up delay-0">
+                <a href="index.html" class="cs-hero__back">← Back to work</a>
+                <div class="cs-hero__tag">Case Study · Gaming Platform · 2024</div>
+                <h1 class="cs-hero__title">
+                    Designing for high-stakes fun: earning trust before the first ₹50 deposit.
+                </h1>
+                <p class="cs-hero__subtitle">
+                    1X OWL is a real-money Lottery + Ludo platform targeting casual gamers in India.
+                    This is the story of how I designed an experience that converts skepticism into confidence.
+                </p>
+
+                <!-- Meta row -->
+                <div class="cs-meta-row">
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Project</div>
+                        <div class="cs-meta-item__value">1X OWL</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">My Role</div>
+                        <div class="cs-meta-item__value">Lead UI/UX Designer</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Duration</div>
+                        <div class="cs-meta-item__value">10 Weeks</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Platform</div>
+                        <div class="cs-meta-item__value">Mobile App (iOS + Android)</div>
+                    </div>
+                    <div class="cs-meta-item">
+                        <div class="cs-meta-item__label">Tools</div>
+                        <div class="cs-meta-item__value">Figma · FigJam · Google Forms</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COVER IMAGE -->
+            <div class="cs-cover fade-up delay-1">
+                <span class="cs-cover__emoji">🦉</span>
+                <div>
+                    <div class="cs-cover__text">1X OWL</div>
+                    <div class="cs-cover__sub">Lottery + Ludo · Real Money Gaming</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE STUDY BODY -->
+        <div class="cs-body">
+
+            <!-- THE PROBLEM -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">01 — Problem</div>
+                <h2>Real-money gaming fails when users don't trust it.</h2>
+                <p>
+                    The platform had two games — Lottery and Ludo — and a product that was technically
+                    functional. The problem wasn't the game mechanics. The problem was that
+                    <strong>no one would deposit money into an app they just discovered.</strong>
+                </p>
+                <p>
+                    Unlike Dream11 or MPL, 1X OWL had zero brand recognition, no reviews,
+                    and no social proof. The existing UI looked like every other generic gaming
+                    app — loud colors, aggressive CTAs, and no signal that real people actually
+                    got paid.
+                </p>
+                <div class="cs-quote">
+                    <p>"The design challenge wasn't 'make it look good.' It was: how do we make a zero-trust product
+                        feel trustworthy enough to get a user's first ₹50?"</p>
+                </div>
+
+                <!-- Key metrics boxes -->
+                <div class="cs-insights">
+                    <div class="cs-insight-card">
+                        <div class="cs-insight-card__num">68%</div>
+                        <div class="cs-insight-card__label">of users check withdrawal reviews before installing a gaming
+                            app</div>
+                    </div>
+                    <div class="cs-insight-card">
+                        <div class="cs-insight-card__num">4 of 6</div>
+                        <div class="cs-insight-card__label">users quit a gaming app after one failed or delayed
+                            withdrawal</div>
+                    </div>
+                    <div class="cs-insight-card">
+                        <div class="cs-insight-card__num">7 → 4</div>
+                        <div class="cs-insight-card__label">steps reduced in the deposit-to-play flow after redesign
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESEARCH -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">02 — Research</div>
+                <h2>I started with trust, not tasks.</h2>
+                <p>
+                    Rather than mapping the existing flow, I started by understanding the emotional
+                    state of a first-time user of a real-money app. I ran 6 user interviews
+                    (ages 20–30, Tier-2 cities), a 34-response survey, and audited 5 competitor apps.
+                </p>
+
+                <table class="cs-table">
+                    <thead>
+                        <tr>
+                            <th>Finding</th>
+                            <th>Design Implication</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>68% check withdrawal reviews before installing</td>
+                            <td>Trust signals must appear before gameplay — on the home screen</td>
+                        </tr>
+                        <tr>
+                            <td>KYC feels like a trap ("they'll block my money")</td>
+                            <td>Reframe KYC as "Unlock your winnings" — benefit-first language</td>
+                        </tr>
+                        <tr>
+                            <td>"Is my Ludo opponent a real person or a bot?"</td>
+                            <td>Show opponent name, avatar, and last-active status in lobby</td>
+                        </tr>
+                        <tr>
+                            <td>Lottery players want to feel "smart" not "lucky"</td>
+                            <td>Show odds and draw history — transparency over hype</td>
+                        </tr>
+                        <tr>
+                            <td>App feels overwhelming — too many numbers</td>
+                            <td>Reduce dashboard density; wallet as secondary layer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- USER PAIN POINTS -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">03 — Pain Points</div>
+                <h2>Five problems, one root cause: no trust.</h2>
+                <ul class="cs-painpoints">
+                    <li>
+                        <span class="cs-painpoints__num">01</span>
+                        <span><strong>Distrust on first open.</strong> No proof of payouts, no community signals, no
+                            brand credibility on the home screen.</span>
+                    </li>
+                    <li>
+                        <span class="cs-painpoints__num">02</span>
+                        <span><strong>Navigation confusion.</strong> Users didn't know where to start — Lottery or Ludo
+                            felt like two separate apps crammed together.</span>
+                    </li>
+                    <li>
+                        <span class="cs-painpoints__num">03</span>
+                        <span><strong>Transaction anxiety.</strong> Deposit and withdrawal screens felt like fintech
+                            forms — cold, unclear, with no feedback loop.</span>
+                    </li>
+                    <li>
+                        <span class="cs-painpoints__num">04</span>
+                        <span><strong>Gameplay opacity.</strong> No live feedback during Ludo games — is it lagging, or
+                            did I lose? No in-game status communication.</span>
+                    </li>
+                    <li>
+                        <span class="cs-painpoints__num">05</span>
+                        <span><strong>Dashboard overload.</strong> Too many numbers competing for attention. Users
+                            couldn't find their balance or next action quickly.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- DESIGN DECISIONS -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">04 — Design Decisions</div>
+                <h2>Every decision had a reason. Here are five that mattered.</h2>
+
+                <div class="cs-decision">
+                    <div class="cs-decision__header">
+                        <div class="cs-decision__icon">1</div>
+                        <div class="cs-decision__title">Trust-first home screen</div>
+                    </div>
+                    <p>Replaced the "WIN BIG 🎉" hero banner with a live stats strip: <em>X active users · ₹Y total
+                            payouts · Z avg. withdrawal time.</em> Real numbers surface immediately.</p>
+                    <div class="cs-decision__why">
+                        <strong>Why:</strong> Research showed users check payout proof before playing. If we don't
+                        surface it on the first screen, they leave to find it on Google — and don't come back.
+                    </div>
+                </div>
+
+                <div class="cs-decision">
+                    <div class="cs-decision__header">
+                        <div class="cs-decision__icon">2</div>
+                        <div class="cs-decision__title">KYC reframed as "Secure your winnings"</div>
+                    </div>
+                    <p>Redesigned KYC as a 3-step card flow with a progress bar. Each step shows the user benefit, not
+                        just the compliance requirement. Step 1: "Verify email → Start playing". Step 3: "Add UPI →
+                        Withdraw instantly."</p>
+                    <div class="cs-decision__why">
+                        <strong>Why:</strong> KYC drop-off is a known death zone in fintech apps. Users feel trapped,
+                        not helped. Reframing it as unlocking a benefit reduced cognitive resistance in testing.
+                    </div>
+                </div>
+
+                <div class="cs-decision">
+                    <div class="cs-decision__header">
+                        <div class="cs-decision__icon">3</div>
+                        <div class="cs-decision__title">Persistent mode toggle (Lottery ⇄ Ludo)</div>
+                    </div>
+                    <p>Replaced a 5-tab bottom nav with a persistent pill toggle at the top. One tap switches context.
+                        Bottom nav stays minimal: Home, Wallet, Profile.</p>
+                    <div class="cs-decision__why">
+                        <strong>Why:</strong> Early wireframes showed a multi-tab nav caused users to feel lost between
+                        games. A single toggle anchors their mental model — "I am in Lottery mode right now."
+                    </div>
+                </div>
+
+                <div class="cs-decision">
+                    <div class="cs-decision__header">
+                        <div class="cs-decision__icon">4</div>
+                        <div class="cs-decision__title">Live presence indicators in Ludo lobby</div>
+                    </div>
+                    <p>Opponent card shows: name, avatar, city, last active "2 min ago." A subtle green dot on the
+                        profile confirms live status.</p>
+                    <div class="cs-decision__why">
+                        <strong>Why:</strong> "Is this a bot?" was the #1 concern in Ludo. Presence indicators answer
+                        the question without the user needing to ask it — invisible reassurance.
+                    </div>
+                </div>
+
+                <div class="cs-decision">
+                    <div class="cs-decision__header">
+                        <div class="cs-decision__icon">5</div>
+                        <div class="cs-decision__title">Withdrawal as a celebration moment</div>
+                    </div>
+                    <p>Post-withdrawal screen: confetti animation, "₹500 sent to your UPI in 4 min" with exact timestamp
+                        and UPI ID confirmation. A "Share your win" CTA to WhatsApp.</p>
+                    <div class="cs-decision__why">
+                        <strong>Why:</strong> Every successful withdrawal is a free marketing event. A user who shares
+                        their win on WhatsApp is your most credible ad. The screen was designed with that downstream
+                        behavior in mind.
+                    </div>
+                </div>
+            </section>
+
+            <!-- WIREFRAME PROGRESSION -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">05 — Process</div>
+                <h2>From FigJam boxes to production-ready screens.</h2>
+                <p>
+                    The design went through three distinct phases. Each phase had a clear goal —
+                    this wasn't iterating for the sake of it.
+                </p>
+
+                <div class="cs-phases">
+                    <div class="cs-phase">
+                        <div class="cs-phase__label">Phase 1</div>
+                        <div class="cs-phase__title">Low-fi Flows<br /><small
+                                style="color:var(--text-muted);font-weight:400;">FigJam sketches, user journeys</small>
+                        </div>
+                    </div>
+                    <div class="cs-phase">
+                        <div class="cs-phase__label">Phase 2</div>
+                        <div class="cs-phase__title">Mid-fi Wireframes<br /><small
+                                style="color:var(--text-muted);font-weight:400;">B&W Figma, spacing, IA
+                                decisions</small></div>
+                    </div>
+                    <div class="cs-phase">
+                        <div class="cs-phase__label">Phase 3</div>
+                        <div class="cs-phase__title">High-fi UI<br /><small
+                                style="color:var(--text-muted);font-weight:400;">Color, type, components,
+                                prototype</small></div>
+                    </div>
+                </div>
+
+                <p>
+                    Key pivot: V1 had a 5-tab bottom nav. After watching 3 users get confused between
+                    "Lottery" and "Games" tabs, I collapsed everything into a 3-tab nav + mode switcher.
+                    This was the single biggest usability improvement of the project.
+                </p>
+            </section>
+
+            <!-- DESIGN SYSTEM & ARCHITECTURE -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">06 — Design System & Visuals</div>
+                <h2>Designed for Trust. Built for Speed.</h2>
+                <p>
+                    To convince a user to deposit real money securely, we avoided the traditional "flashy red casino" aesthetics entirely. Instead, the design system borrows heavily from modern banking apps, anchoring on elegant purples and structured, legible typography.
+                </p>
+
+                <div class="ds-grid">
+                    <!-- Typography Card -->
+                    <div class="ds-card">
+                        <h4>Typography</h4>
+                        <div class="ds-type">
+                            <div class="ds-type__aa" style="font-family: var(--font-display);">Aa</div>
+                            <div class="ds-type__details">
+                                <h5 class="ds-type__name">Poppins / Primary</h5>
+                                <span class="ds-type__weights">Semibold · Bold</span>
+                            </div>
+                        </div>
+                        <div class="ds-type" style="margin-top: 24px;">
+                            <div class="ds-type__aa" style="font-family: var(--font-body); font-size: 48px;">12</div>
+                            <div class="ds-type__details">
+                                <h5 class="ds-type__name">Inter / Wallet Data</h5>
+                                <span class="ds-type__weights">Regular · Medium for financial clarity</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Colors Card -->
+                    <div class="ds-card">
+                        <h4>Brand Pallete</h4>
+                        <div class="ds-colors">
+                            <div class="ds-color">
+                                <div class="ds-color__swatch" style="background: #7E14E5;"></div>
+                                <span class="ds-color__label">#7E14E5</span>
+                            </div>
+                            <div class="ds-color">
+                                <div class="ds-color__swatch" style="background: #F59E0B;"></div>
+                                <span class="ds-color__label">#F59E0B</span>
+                            </div>
+                            <div class="ds-color">
+                                <div class="ds-color__swatch" style="background: #10B981;"></div>
+                                <span class="ds-color__label">#10B981</span>
+                            </div>
+                            <div class="ds-color">
+                                <div class="ds-color__swatch" style="background: #FFFFFF;"></div>
+                                <span class="ds-color__label">#FFFFFF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 32px; font-size: 20px; color: var(--text-primary);">Frontend Structure</h3>
+                <p>
+                    Rather than forcing users to download a massive app from an App Store, we engineered 1X OWL as a highly optimized web-app (PWA). This means players just click a link and it instantly loads like a native app on their phone. We also integrated a powerful push-notification system so users instantly receive an alert on their phone the second they win a lottery draw.
+                </p>
+            </section>
+
+            <!-- IMPACT -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">07 — Impact</div>
+                <h2>Results that mattered — honest, not inflated.</h2>
+
+                <table class="cs-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Deposit flow steps</td>
+                            <td>Reduced from 7 steps to 4 — 43% fewer taps to first deposit</td>
+                        </tr>
+                        <tr>
+                            <td>Usability test completion</td>
+                            <td>5/6 users completed full lottery flow without any assistance</td>
+                        </tr>
+                        <tr>
+                            <td>KYC completion (prototype)</td>
+                            <td>All 6 users completed KYC with new framing vs. 3/6 with old flow</td>
+                        </tr>
+                        <tr>
+                            <td>Design components delivered</td>
+                            <td>120+ Figma components, zero revision cycles post-handoff</td>
+                        </tr>
+                        <tr>
+                            <td>Client outcome</td>
+                            <td>"This feels like a product people will actually trust" — Direct quote</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="cs-quote">
+                    <p>"Real-money gaming is not a UX problem. It's a trust problem with a UX solution."</p>
+                </div>
+            </section>
+
+            <!-- REFLECTION -->
+            <section class="cs-section reveal">
+                <div class="cs-section__label">08 — Reflection</div>
+                <h2>What I'd do differently.</h2>
+                <p>
+                    If I were to restart this project, I'd run a proper card-sorting session
+                    before finalizing the IA — I made some navigation decisions based on
+                    competitive analysis that could have been validated faster with users.
+                </p>
+                <p>
+                    I'd also build a more formal design system from week 1. Components evolved
+                    organically, which created technical debt in the Figma file by week 7.
+                    Clean systems make for faster iterations — I learned that the hard way.
+                </p>
+            </section>
+
+        </div>
+
+        <!-- NEXT CASE STUDY -->
+        <div class="container">
+            <div class="cs-next reveal">
+                <div class="cs-next__label">Next Case Study</div>
+                <a href="case-study-pawaac.html" class="cs-next__link">PAWAAC — Autonomous Drones →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__inner">
+            <span class="footer__copy">© 2025 Sanjana Gupta — Designed & built with care.</span>
+            <span><a href="index.html" class="footer__top-link">← Back to work</a></span>
+        </div>
+    </footer>
+
+    <script src="js/nav.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/cursor.js"></script>
+</body>
+
+</html>
