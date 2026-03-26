@@ -166,19 +166,30 @@
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 padding: 40px 0 !important;
-                gap: 24px !important;
+                gap: 20px !important;
+                border-bottom: 1px solid var(--border);
             }
-            .work-row__info { width: 100% !important; flex: none !important; }
+            .work-row__info { 
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px !important;
+                width: 100% !important; 
+            }
+            .work-row__title { font-size: 3rem !important; margin: 0 !important; }
+            .work-row__num { width: auto !important; margin-bottom: 8px !important; display: block !important; }
             .work-row__image {
                 position: relative !important;
-                top: 0 !important; right: 0 !important;
+                left: 0 !important; top: 0 !important;
                 transform: none !important;
                 width: 100% !important;
+                max-width: none !important;
                 height: auto !important;
-                aspect-ratio: 16/9 !important;
+                aspect-ratio: 16/10 !important;
                 opacity: 1 !important;
                 visibility: visible !important;
+                margin-top: 10px !important;
             }
+            .work-row:hover .work-row__title { transform: none !important; }
 
             /* 6. About Section */
             #about > div > div {
@@ -928,19 +939,30 @@
 
         revealElements.forEach(el => revealOnScroll.observe(el));
 
-        // --- 5. THEME TOGGLE (Proper Fix) ---
+        // --- 5. THEME TOGGLE (Persistence Edition) ---
+        const body = document.body;
         const themeBtn = document.getElementById('themeToggle');
         const themeLabel = document.getElementById('themeLabel');
-        
-        themeBtn.addEventListener('click', () => {
-            const body = document.body;
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                themeLabel.innerHTML = '☼ Light';
-            } else {
-                body.setAttribute('data-theme', 'dark');
+
+        const updateThemeLabel = (theme) => {
+            if (theme === 'dark') {
                 themeLabel.innerHTML = '☾ Dark';
+            } else {
+                themeLabel.innerHTML = '☼ Light';
             }
+        };
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        body.setAttribute('data-theme', currentTheme);
+        updateThemeLabel(currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeLabel(newTheme);
         });
 
         // --- 6. Masonry Animation on Scroll ---
