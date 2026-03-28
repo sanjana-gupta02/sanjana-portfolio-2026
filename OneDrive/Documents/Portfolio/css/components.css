@@ -510,8 +510,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(100%);
-    transition: filter 0.6s ease;
+    filter: none; /* Keep original color as requested */
+    transition: transform 0.8s var(--ease-slow);
 }
 
 /* Hover effects */
@@ -531,7 +531,7 @@
         transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
     .work-row:hover .work-row__image img {
-        filter: grayscale(0%);
+        transform: scale(1.05); /* Just scale, no grayscale change needed */
     }
 }
 
@@ -825,8 +825,18 @@
 }
 .about-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center; padding: 120px 0; }
 .about__portrait { width: 100%; aspect-ratio: 4/5; border-radius: 32px; overflow: hidden; background: var(--bg-secondary); border: 1px solid var(--border); }
-.about__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; filter: grayscale(100%); transition: filter 0.8s var(--ease-slow), transform 1.2s var(--ease-slow); }
-.about__portrait:hover img { filter: grayscale(0%); transform: scale(1.05); }
+.about__portrait img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    object-position: center 15%; 
+    filter: none; /* Keep original color */
+    transition: transform 1.2s var(--ease-slow); 
+}
+
+.about__portrait:hover img { 
+    transform: scale(1.05); 
+}
 @media (max-width: 1024px) { .about-grid { grid-template-columns: 1fr; gap: 40px; padding: 60px 0; } .about__portrait { aspect-ratio: 1/1; } }
 
 /* --- Flip Reveal Card for Other Projects --- */
@@ -1078,7 +1088,9 @@
 }
 
 @media (max-width: 768px) {
-    .nav__links { display: none; } /* Consider a mobile menu if time permits, or just keep simple */
+    .nav__links { display: flex; gap: 8px; } /* Re-enabled for mobile visibility */
+    .nav__link { font-size: 10px; }
+    .nav__logo { font-size: 16px; }
     .hero { padding: 120px 0 60px !important; }
     .hero__title-reveal { font-size: 2.5rem; letter-spacing: -1px; }
     .hero__metrics { flex-direction: column; gap: 16px; align-items: flex-start; }
