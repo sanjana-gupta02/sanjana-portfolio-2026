@@ -20,7 +20,7 @@
     <!-- Theme Guard: Prevent Flash of Incorrect Theme -->
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('portfolio-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
@@ -400,7 +400,7 @@
             <a href="index.html#about" class="nav__link magnetic hoverable">About</a>
             <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
             <button class="theme-btn magnetic hoverable" id="themeToggle" aria-label="Toggle Theme">
-                <span id="themeLabel">☾ Dark</span>
+                <span id="themeLabel">☼ Light</span>
             </button>
         </div>
 
@@ -426,7 +426,7 @@
                         <a href="https://github.com/sanjana-gupta02" target="_blank">GitHub</a>
                     </div>
                     <button class="theme-btn theme-btn--mobile" id="themeToggleMobile">
-                        <span id="themeLabelMobile" style="font-size: 11px;">☾ Dark Theme</span>
+                        <span id="themeLabelMobile" style="font-size: 11px;">☼ Light Mode</span>
                     </button>
                 </div>
             </div>
@@ -731,20 +731,28 @@
             });
         });
 
-        // Mobile Theme Toggle Sync
-        const mobileThemeToggle = document.getElementById('themeToggleMobile');
-        const mobileThemeLabel = document.getElementById('themeLabelMobile');
-        if(mobileThemeToggle) {
-            mobileThemeToggle.addEventListener('click', () => {
+        // Integrated Theme Management (Unified Desktop & Mobile)
+        const setupThemeToggle = (btnId, labelId) => {
+            const btn = document.getElementById(btnId);
+            if(!btn) return;
+            
+            btn.addEventListener('click', () => {
                 const current = document.documentElement.getAttribute('data-theme');
                 const next = current === 'dark' ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-theme', next);
                 localStorage.setItem('portfolio-theme', next);
-                if(mobileThemeLabel) mobileThemeLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
-                const mainLabel = document.getElementById('themeLabel');
-                if(mainLabel) mainLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+                
+                // Universal Label Sync
+                const labels = ['themeLabel', 'themeLabelMobile'];
+                labels.forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+                });
             });
-        }
+        };
+
+        setupThemeToggle('themeToggle', 'themeLabel');
+        setupThemeToggle('themeToggleMobile', 'themeLabelMobile');
     </script>
 </body>
 
