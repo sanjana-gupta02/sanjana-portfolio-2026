@@ -248,18 +248,6 @@
             .desktop-only { display: none !important; }
             .nav__mobile-toggle { 
                 display: flex !important;
-                flex-direction: row;
-                align-items: center;
-                gap: 10px;
-                padding: 0 4px;
-                height: 48px;
-                background: none;
-                border: none;
-                z-index: 1001;
-                cursor: pointer;
-            }
-            .nav__mobile-toggle-btn {
-                display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -269,6 +257,8 @@
                 background: var(--bg-secondary);
                 border: 1px solid var(--border);
                 border-radius: 50%;
+                z-index: 1001;
+                cursor: pointer;
                 transition: all 0.3s ease;
             }
             .nav__mobile-toggle .line {
@@ -277,17 +267,8 @@
                 background: var(--text-primary);
                 transition: all 0.4s var(--ease-slow);
             }
-            .is-nav-open .nav__mobile-toggle-btn .line-1 { transform: translateY(3.5px) rotate(45deg); }
-            .is-nav-open .nav__mobile-toggle-btn .line-2 { transform: translateY(-3.5px) rotate(-45deg); }
-
-            .nav__mobile-toggle .toggle-label {
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: var(--text-primary);
-                opacity: 0.6;
-                font-weight: 600;
-            }
+            .is-nav-open .nav__mobile-toggle .line-1 { transform: translateY(3.5px) rotate(45deg); }
+            .is-nav-open .nav__mobile-toggle .line-2 { transform: translateY(-3.5px) rotate(-45deg); }
 
             .nav-overlay {
                 position: fixed;
@@ -379,11 +360,8 @@
 
         <!-- Mobile Toggle (Visible only on Mobile) -->
         <button class="nav__mobile-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
-            <span class="toggle-label" id="mobileMenuLabel">MENU</span>
-            <div class="nav__mobile-toggle-btn">
-                <span class="line line-1"></span>
-                <span class="line line-2"></span>
-            </div>
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
         </button>
     </nav>
 
@@ -560,9 +538,7 @@
         
         if(menuToggle) {
             menuToggle.addEventListener('click', () => {
-                const isOpen = bodyTag.classList.toggle('is-nav-open');
-                const label = document.getElementById('mobileMenuLabel');
-                if(label) label.textContent = isOpen ? 'CLOSE' : 'MENU';
+                bodyTag.classList.toggle('is-nav-open');
             });
         }
 
@@ -570,8 +546,6 @@
         overlayLinks.forEach(link => {
             link.addEventListener('click', () => {
                 bodyTag.classList.remove('is-nav-open');
-                const label = document.getElementById('mobileMenuLabel');
-                if(label) label.textContent = 'MENU';
             });
         });
 
