@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
 
+    <!-- Theme Guard: Prevent Flash of Incorrect Theme -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('portfolio-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         :root {
             --jakarta: 'Plus Jakarta Sans', sans-serif;
@@ -34,6 +41,7 @@
             background: var(--bg-primary); 
             color: var(--text-primary);
             position: relative;
+            overflow-x: hidden;
         }
 
         body::after {
@@ -76,13 +84,14 @@
         }
 
         .cs-hero__title {
-            font-size: clamp(40px, 8vw, 84px);
+            font-size: clamp(32px, 8vw, 84px); /* Slightly smaller start for mobile */
             line-height: 1.05;
             color: var(--text-primary);
             max-width: 900px;
             margin-bottom: 32px;
             font-weight: 600;
             letter-spacing: -2.5px;
+            word-break: break-word; /* Safety for long titles */
         }
 
         .cs-hero__title em {
@@ -205,10 +214,35 @@
             background: var(--accent-pawaac);
         }
 
-        @media (max-width: 768px) {
-            .cs-hero__title { font-size: 40px; }
-            .cs-meta-row { gap: 24px; }
-            .live-browser { height: 450px; }
+        .cs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cs-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .cs-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 900px) {
+            .cs-hero { padding: 100px 0 40px; }
+            .cs-hero__title { font-size: 36px; padding: 0 10px; }
+            .cs-meta-row { gap: 24px; flex-direction: column; }
+            .live-browser { height: 450px; width: 95vw; margin-left: -2.5vw; }
+            .cs-body { padding: 40px 16px; }
         }
     </style>
 </head>
@@ -273,44 +307,71 @@
             <main class="cs-body">
                 <!-- Overview -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">01 / The Core Challenge</span>
-                    <h2>Converting Technical Complexity into Narrative Precision.</h2>
-                    <p style="font-size: 20px; line-height: 1.8; letter-spacing: -0.01em;">The primary friction was a disconnect between PAWAAC's cutting-edge drone hardware and its legacy, dashboard-heavy web presence. My mission was to architect a cinematic digital storefront that translates autonomous aerial precision into a high-converting, premium brand experience.</p>
-                    <p style="font-size: 20px; line-height: 1.8; opacity: 0.8;">Using Framer as the engine, I moved beyond standard landing page structures. I engineered a narrative flow that meticulously explains 'Swarm Intelligence' not as a technical concept, but as a strategic business asset.</p>
+                    <span class="cs-section__num">01 / The Mission</span>
+                    <h2>Telling the Story of Tech.</h2>
+                    <p>When I was approached to redesign the PAWAAC website, the challenge was clear: move away from a traditional dashboard-style landing page towards a cinematic, high-end product experience. I focused on architecting a narrative that explains complex drone tech in an intuitive, premium way.</p>
+                </section>
+
+                <!-- Research -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">02 / Discovery</span>
+                    <h2>Simplifying Complexity.</h2>
+                    <p>Before moving to Figma, I conducted stakeholder interviews to map out the "Technical Persona." We discovered that our users aren't just looking for specs—they're looking for operational confidence.</p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Insight</th>
+                                <th>Design Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cognitive Overload</td>
+                                <td>Minimalist data visualization and layered disclosure.</td>
+                            </tr>
+                            <tr>
+                                <td>Trust in Precision</td>
+                                <td>Micro-animations signifying data processing speed.</td>
+                            </tr>
+                            <tr>
+                                <td>Brand Authority</td>
+                                <td>High-contrast, brutalist-industrial typography.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
 
                 <!-- Process -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">02 / Engineering Logic</span>
-                    <h2>Designing for High-Stake Precision.</h2>
-                    <p style="font-size: 19px; line-height: 1.8;">Defense and industrial tech demand a layout language that signifies stability. I avoided trend-based design in favor of a "Technical Brutalism" that communicates durability and trust at first glance.</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0;">
-                        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-secondary);">
-                            <h4 style="margin-bottom: 12px; color: var(--accent-pawaac); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">The Logic</h4>
-                            <p style="font-size: 15px; line-height: 1.6; margin: 0;">Developed a strict mathematical 12-column grid to mirror the 'Autonomous Grid' used in aerial surveillance triangulation.</p>
-                        </div>
-                        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-secondary);">
-                            <h4 style="margin-bottom: 12px; color: var(--accent-pawaac); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">The Trade-off</h4>
-                            <p style="font-size: 15px; line-height: 1.6; margin: 0;">Sacrificed decorative animations for high-performance 'HUD' style transitions to maintain zero cognitive friction for users.</p>
-                        </div>
-                    </div>
+                    <span class="cs-section__num">03 / Design Logic</span>
+                    <h2>Architecture of Trust.</h2>
+                    <p>Defense tech often feels cold and intimidating. I chose to blend industrial aesthetics with "human-first" interaction models. If an operator trusts the interface, they make fewer tactical errors.</p>
+                    <ul>
+                        <li><strong>Blueprint Grid:</strong> Established a strict mathematical layout that feels engineered and reliable.</li>
+                        <li><strong>High-Contrast HUD:</strong> Optimized for visibility in low-light environments (night surveillance).</li>
+                        <li><strong>Fluid Interactions:</strong> Using Framer’s motion engine to signify data flow transitions.</li>
+                    </ul>
+                </section>
+
+                <!-- Expansion: Component System -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">04 / Product Scalability</span>
+                    <h2>A Modular Component System.</h2>
+                    <p>Because PAWAAC is an evolving tech family, the website needed to scale. I developed a design system of 40+ unique components in Framer, allowing the marketing team to launch new landing pages for various drone models in hours rather than weeks.</p>
+                </section>
+
+                <!-- Challenges -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">05 / The Technical Hurdle</span>
+                    <h2>Performance at Scale.</h2>
+                    <p>The primary challenge was balancing high-fidelity video background assets with web performance. I implemented a custom lazy-loading strategy and video optimization pipeline that reduced page load times by 40% without sacrificing visual crispness.</p>
                 </section>
 
                 <!-- Impact -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">03 / Strategic Impact</span>
-                    <h2>Quantitative & Qualitative Success.</h2>
-                    <p style="font-size: 19px; line-height: 1.8;">The redesign transformed the platform from a simple website into a strategic storytelling engine, resulting in immediate international recognition within the defense tech sector.</p>
-                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <span style="font-family: var(--instrument); font-size: 32px; color: var(--accent-pawaac); font-style: italic;">40%</span>
-                            <span style="font-size: 16px; opacity: 0.7;">Reduction in bounce rate through narrative-driven UX.</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <span style="font-family: var(--instrument); font-size: 32px; color: var(--accent-pawaac); font-style: italic;">HIGH</span>
-                            <span style="font-size: 16px; opacity: 0.7;">Acquisition signal from Tier-1 venture partners.</span>
-                        </div>
-                    </div>
+                    <span class="cs-section__num">06 / Outcome</span>
+                    <h2>Mission Successful.</h2>
+                    <p>The redesign transformed a complex dashboard into a streamlined command center. The result is a platform that isn't just "functional"—it's a premium experience that respects the user’s cognitive load.</p>
                 </section>
             </main>
 

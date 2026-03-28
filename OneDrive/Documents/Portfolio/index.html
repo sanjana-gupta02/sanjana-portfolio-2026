@@ -69,7 +69,15 @@
             .reveal, .reveal.is-inview { opacity: 1 !important; transform: none !important; }
             .jig-piece { fill-opacity: 0 !important; }
         }
-
+    </style>
+    <!-- Theme Guard: Prevent Flash of Incorrect Theme -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('portfolio-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <style>
         /* ----------------------------------------------------
            GLOBAL & MOBILE RESPONSIVENESS OVERRIDES
            Resolves critical grid constraints & overflows
@@ -85,7 +93,7 @@
         
         @media (max-width: 900px) {
             /* 0. Universal Container Padding Recovery (Prevents flush edge-sticking) */
-            .container { padding-left: 24px !important; padding-right: 24px !important; }
+            .container { padding-left: 20px !important; padding-right: 20px !important; width: 100% !important; max-width: 100% !important; }
 
             /* Essential Mobile Utility Overrides */
             a[href^="mailto:"] { word-break: break-all !important; font-size: clamp(16px, 6vw, 4rem) !important; } /* Stop email string from bleeding only on mobile */
@@ -111,6 +119,16 @@
             .hero h1 {
                 letter-spacing: -2px !important;
                 line-height: 0.9 !important;
+            }
+            .work-row__title {
+                font-size: clamp(42px, 12vw, 72px) !important;
+                letter-spacing: -2px !important;
+                line-height: 0.9 !important;
+            }
+            .work-row__num {
+                font-size: 14px !important;
+                margin-bottom: 8px;
+                display: block;
             }
             
             /* 4. Action Button Stacking */
@@ -224,7 +242,7 @@
         }
     </style>
 </head>
-<body data-theme="dark">
+<body>
 
     <!-- WCAG Screen Reader Anchor -->
     <a href="#main-content" class="skip-to-content">Skip to Main Content</a>    <!-- Loading Screen -->
@@ -263,16 +281,16 @@
                 
                 <!-- Left Rail: Vertical Serial Data -->
                 <div class="reveal" style="writing-mode: vertical-rl; transform: rotate(180deg); display: flex; justify-content: space-between; height: 100%; border-right: 1px solid var(--border); padding-right: 24px;">
-                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">STATUS: ARCHITECTING_UX</span>
-                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">LOC: VRN / IND</span>
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">ID: SANJANA_GUPTA_V3</span>
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">LOC: VRN / UP</span>
                 </div>
 
                 <!-- Center: Multi-Layered Identity Core -->
                 <div class="hero-center" style="position: relative; text-align: center;">
                     <div class="reveal" style="margin-bottom: 32px;">
-                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
-                            ENGINEERING-LED <br> 
-                            <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); text-transform: lowercase;">product design</i>
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            I DESIGN <br> 
+                            <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); text-transform: lowercase;">products</i>
                         </h1>
                     </div>
 
@@ -284,20 +302,20 @@
                     </div>
 
                     <div class="reveal" style="margin-top: 32px;">
-                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
-                            BUILDING <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text-primary); text-transform: lowercase;">systems</i> AT SCALE.
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            PEOPLE <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text-primary); text-transform: lowercase;">actually</i> USE.
                         </h1>
                     </div>
 
                     <div style="max-width: 700px; margin: 40px auto;" class="reveal fade-up">
                         <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
-                            Solving complex user friction through architectural precision @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis</strong>.<br>
+                            A Product Designer with an engineering foundation @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis</strong>.<br>
                             Specialized in high-end design systems for SaaS, Fintech & Defense.
                         </p>
                     </div>
 
                     <div class="hero-actions" style="display: flex; gap: 24px; justify-content: center; margin-top: 48px;">
-                        <a href="#work" class="btn-primary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">EXPLORE SYSTEMS</a>
+                        <a href="#work" class="btn-primary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">SEE WORK</a>
                         <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-secondary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">RESUME</a>
                     </div>
                 </div>
@@ -607,17 +625,17 @@
                         </h2>
                         
                         <div class="about-text-group" style="max-width: 550px;">
-                            <p style="font-size: 19px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4; font-weight: 500;">
-                                I architect <i style="font-family: 'Instrument Serif', serif; font-style: italic;">fault-tolerant user experiences.</i>
+                            <p style="font-size: 19px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4; font-weight: 400;">
+                                I am a Product Designer & Software Engineer specialized in architecting systems that <i style="font-family: 'Instrument Serif', serif; font-style: italic;">anticipate human friction.</i>
                             </p>
-                            <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.7;">
-                                With a dual-disciplinary background in Software Engineering and Product Design, I occupy the critical space between <strong style="color: var(--text-primary);">code and human behavior.</strong> My approach isn't just about 'how it looks'—it's about how it handles complexity, scale, and the inevitable friction of human interaction. Currently scaling the digital future @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis.</strong>
+                            <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.6;">
+                                With a foundation in software engineering and a deep empathy for the user journey, I bridge the void between complex technical architecture and intuitive interface design. Great products aren't just built—they are <strong style="color: var(--text-primary);">choreographed.</strong>
                             </p>
                             
                             <div style="display: flex; align-items: center; gap: 32px;">
                                 <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-circle magnetic hoverable" style="width: 140px; height: 140px; text-transform: uppercase; font-size: 13px; font-weight: 500;">RESUME ↗</a>
                                 <div style="opacity: 0.4; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; line-height: 1.5;">
-                                    ARCHITECTING <br> DIGITAL TRUST.
+                                    ARCHITECTING <br> EXCELLENCE.
                                 </div>
                             </div>
                         </div>
@@ -989,37 +1007,6 @@
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
-            });
-        });
-
-        // --- 8. Work List Image Follow Effect ---
-        const workRows = document.querySelectorAll('.work-row');
-        workRows.forEach(row => {
-            const image = row.querySelector('.work-row__image');
-            row.addEventListener('mousemove', (e) => {
-                const rect = row.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Fine-tuned offset for premium centering
-                if (image) {
-                    image.style.transform = `translate(${x - 400}px, ${y - 250}px) scale(1.1)`;
-                }
-            });
-            
-            row.addEventListener('mouseenter', () => {
-                if (image) {
-                    image.style.opacity = '1';
-                    image.style.visibility = 'visible';
-                }
-            });
-            
-            row.addEventListener('mouseleave', () => {
-                if (image) {
-                    image.style.opacity = '0';
-                    image.style.visibility = 'hidden';
-                    image.style.transform = 'translate(-50%, -50%) scale(0.8)';
-                }
             });
         });
     </script>

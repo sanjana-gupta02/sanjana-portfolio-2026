@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
 
+    <!-- Theme Guard: Prevent Flash of Incorrect Theme -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('portfolio-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         :root {
             --jakarta: 'Plus Jakarta Sans', sans-serif;
@@ -30,6 +37,7 @@
             background: var(--bg-primary); 
             color: var(--text-primary);
             position: relative;
+            overflow-x: hidden;
         }
 
         body::after {
@@ -72,13 +80,14 @@
         }
 
         .cs-hero__title {
-            font-size: clamp(40px, 8vw, 84px);
+            font-size: clamp(32px, 8vw, 84px);
             line-height: 1.05;
             color: var(--text-primary);
             max-width: 900px;
             margin-bottom: 32px;
             font-weight: 600;
             letter-spacing: -2.5px;
+            word-break: break-word;
         }
 
         .cs-hero__title em {
@@ -278,24 +287,18 @@
             border: none;
         }
 
-        @media (max-width: 768px) {
-            .cs-hero__title { font-size: 36px; }
-            .cs-meta-row { gap: 24px; }
-            .live-browser { height: 450px; }
+        @media (max-width: 900px) {
+            .cs-hero { padding: 100px 0 40px; }
+            .cs-hero__title { font-size: 36px; padding: 0 10px; }
+            .cs-meta-row { gap: 24px; flex-direction: column; }
+            .live-browser { height: 450px; width: 95vw; margin-left: -2.5vw; }
+            .cs-body { padding: 40px 16px; }
             .style-guide { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            .cs-hero__title { font-size: 32px; }
-            .cs-meta-row { flex-direction: column; gap: 16px; align-items: flex-start; }
-            .cs-meta-item { width: 100%; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-            .live-browser { height: 320px; }
-            .live-link-pill { width: 100%; text-align: center; }
         }
     </style>
 </head>
 
-<body data-theme="dark">
+<body>
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <span id="loaderText">ZODIAQ...</span>
@@ -548,15 +551,12 @@
 
                 <!-- Outcome -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">10 / Strategic Takeaway</span>
-                    <h2>Engineering Trust through Data Simplification.</h2>
-                    <p style="font-size: 19px; line-height: 1.8;">The ZODIAQ project was a masterclass in 'Contextual UX'. The challenge wasn't just aesthetics—it was about translating complex ancient astrological data (Kundali & Panchang) into a frictionless, modern mobile interface that a user could navigate under high emotional stress. </p>
-                    <div style="padding: 24px; border-left: 4px solid var(--accent-zodiaq); background: var(--bg-secondary); margin-bottom: 32px;">
-                        <p style="margin: 0; font-weight: 600; font-family: var(--instrument); font-size: 20px; font-style: italic;">"The success of a niche product lies in the removal of noise. By stripping back decorative mysticism, we boosted booking conversion for first-time users."</p>
-                    </div>
-                    <p style="font-size: 19px; line-height: 1.8; opacity: 0.8;">This project proved that design maturity is found in restraint. High-end product experiences don't over-design; they solve problems with maximum clarity.</p>
+                    <span class="cs-section__num">10 / What I Learned</span>
+                    <h2>This project taught me a lot.</h2>
+                    <p>Designing ZODIAQ was one of my most meaningful projects. It challenged me to design for a niche audience, simplify complex information (like Kundali charts and Panchang data), and create an experience that feels trustworthy.</p>
+                    <p>From the first brainstorming session to collecting final feedback — every step of the process taught me how to balance visual design with real usability. I’m proud of how the final product turned out.</p>
                     <div style="margin-top: 40px;">
-                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill" style="padding: 18px 36px; background: var(--accent-zodiaq); color: white; text-decoration: none; border-radius: 99px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;">Explore Live Platform ↗</a>
+                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill">Explore Live Platform ↗</a>
                     </div>
                 </section>
             </main>
