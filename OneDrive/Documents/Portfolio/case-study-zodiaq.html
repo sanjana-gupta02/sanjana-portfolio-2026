@@ -294,6 +294,75 @@
             .live-browser { height: 450px; width: 95vw; margin-left: -2.5vw; }
             .cs-body { padding: 40px 16px; }
             .style-guide { grid-template-columns: 1fr; }
+
+            /* Mobile Menu Reimagined */
+            .desktop-only { display: none !important; }
+            .nav__mobile-toggle { 
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                gap: 6px;
+                width: 32px;
+                height: 32px;
+                background: none;
+                border: none;
+                z-index: 1001;
+                cursor: pointer;
+            }
+            .nav__mobile-toggle .line {
+                width: 100%;
+                height: 2px;
+                background: var(--text-primary);
+                transition: all 0.4s var(--ease-out);
+                border-radius: 2px;
+            }
+            .is-nav-open .nav__mobile-toggle .line-1 { transform: translateY(4px) rotate(45deg); }
+            .is-nav-open .nav__mobile-toggle .line-2 { transform: translateY(-4px) rotate(-45deg); }
+
+            .nav-overlay {
+                position: fixed;
+                inset: 0;
+                background: var(--bg-primary);
+                backdrop-filter: blur(24px);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.6s var(--ease-slow);
+            }
+            .is-nav-open .nav-overlay { transform: translateY(0); }
+            
+            .nav-overlay__content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s var(--ease-out) 0.3s;
+            }
+            .is-nav-open .nav-overlay__content { opacity: 1; transform: translateY(0); }
+
+            .nav-overlay__link {
+                font-family: var(--instrument);
+                font-style: italic;
+                font-size: 3.5rem;
+                color: var(--text-primary);
+                text-decoration: none;
+                line-height: 1;
+            }
+
+            .theme-btn--mobile {
+                padding: 12px 24px;
+                border: 1px solid var(--border);
+                border-radius: 99px;
+                background: var(--bg-secondary);
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--text-primary);
+            }
         }
     </style>
 </head>
@@ -310,7 +379,9 @@
     <!-- Navigation -->
     <nav class="nav" id="mainNav">
         <a href="index.html" class="nav__logo magnetic">Sanjana.</a>
-        <div class="nav__links">
+        
+        <!-- Desktop Links (Hidden on Mobile) -->
+        <div class="nav__links desktop-only">
             <a href="index.html#work" class="nav__link magnetic hoverable">Work</a>
             <a href="index.html#about" class="nav__link magnetic hoverable">About</a>
             <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
@@ -318,7 +389,32 @@
                 <span id="themeLabel">☾ Dark</span>
             </button>
         </div>
+
+        <!-- Mobile Toggle (Visible only on Mobile) -->
+        <button class="nav__mobile-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+        </button>
     </nav>
+
+    <!-- Full-Screen Mobile Menu Overlay -->
+    <div class="nav-overlay" id="mobileMenuOverlay">
+        <div class="nav-overlay__content">
+            <a href="index.html#work" class="nav-overlay__link">Work</a>
+            <a href="index.html#about" class="nav-overlay__link">About</a>
+            <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav-overlay__link">Resume</a>
+            
+            <div class="nav-overlay__footer">
+                <button class="theme-btn theme-btn--mobile" id="themeToggleMobile">
+                    <span id="themeLabelMobile">☾ Dark</span>
+                </button>
+                <div class="nav-overlay__socials">
+                    <a href="https://www.linkedin.com/in/sanjana-gupta-187995230/" target="_blank">LinkedIn</a>
+                    <a href="https://behance.net/sanjanagupta18" target="_blank">Behance</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="smooth-wrapper">
         <div class="container">
@@ -599,6 +695,36 @@
                 document.getElementById('loader').classList.add('loader--hidden');
             }, 1000);
         });
+
+        // Mobile Menu logic
+        const menuToggle = document.getElementById('mobileMenuToggle');
+        const overlayLinks = document.querySelectorAll('.nav-overlay__link');
+        
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                document.body.classList.toggle('is-nav-open');
+            });
+        }
+        overlayLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                document.body.classList.remove('is-nav-open');
+            });
+        });
+
+        // Mobile Theme Toggle Sync
+        const mobileThemeToggle = document.getElementById('themeToggleMobile');
+        const mobileThemeLabel = document.getElementById('themeLabelMobile');
+        if(mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('portfolio-theme', next);
+                if(mobileThemeLabel) mobileThemeLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+                const mainLabel = document.getElementById('themeLabel');
+                if(mainLabel) mainLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+            });
+        }
     </script>
 </body>
 

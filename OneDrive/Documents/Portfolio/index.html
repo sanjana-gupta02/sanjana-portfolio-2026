@@ -98,10 +98,95 @@
             /* Essential Mobile Utility Overrides */
             a[href^="mailto:"] { word-break: break-all !important; font-size: clamp(16px, 6vw, 4rem) !important; } /* Stop email string from bleeding only on mobile */
 
-            /* 1. Global Navigation */
-            .nav { padding: 0 16px !important; }
-            .nav__links { gap: 12px !important; }
-            .nav__link { font-size: 12px !important; }
+            /* 1. Global Navigation (Mobile Reimagining) */
+            .nav { padding: 0 20px !important; }
+            .desktop-only { display: none !important; } /* Hide normal links */
+            .nav__mobile-toggle { 
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                gap: 6px;
+                width: 32px;
+                height: 32px;
+                background: none;
+                border: none;
+                z-index: 1001;
+                cursor: pointer;
+            }
+            .nav__mobile-toggle .line {
+                width: 100%;
+                height: 2px;
+                background: var(--text-primary);
+                transition: all 0.4s var(--ease-out);
+                border-radius: 2px;
+            }
+            .is-nav-open .nav__mobile-toggle .line-1 { transform: translateY(4px) rotate(45deg); }
+            .is-nav-open .nav__mobile-toggle .line-2 { transform: translateY(-4px) rotate(-45deg); }
+
+            /* Modern Drawer Overlay */
+            .nav-overlay {
+                position: fixed;
+                inset: 0;
+                background: var(--bg-primary); /* Use solid color fallback */
+                backdrop-filter: blur(24px);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: translateY(-100%);
+                transition: transform 0.6s var(--ease-slow);
+                overflow: hidden;
+            }
+            .is-nav-open .nav-overlay { transform: translateY(0); }
+            
+            .nav-overlay__content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+                text-align: center;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s var(--ease-out) 0.3s;
+            }
+            .is-nav-open .nav-overlay__content { opacity: 1; transform: translateY(0); }
+
+            .nav-overlay__link {
+                font-family: var(--font-display);
+                font-size: clamp(3rem, 15vw, 6rem);
+                color: var(--text-primary);
+                text-decoration: none;
+                line-height: 1;
+                transition: color 0.3s ease;
+            }
+            .nav-overlay__link:active { color: var(--accent); }
+
+            .nav-overlay__footer {
+                margin-top: 60px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+            .theme-btn--mobile {
+                padding: 12px 24px;
+                border: 1px solid var(--border);
+                border-radius: 99px;
+                background: var(--bg-secondary);
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--text-primary);
+                cursor: pointer;
+            }
+            .nav-overlay__socials {
+                display: flex;
+                gap: 20px;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                opacity: 0.6;
+            }
             
             /* 2. Hero Structural Fixes */
             .hero > .container {
@@ -275,16 +360,42 @@
     <!-- Navigation -->
     <nav class="nav" id="mainNav">
         <a href="/" class="nav__logo magnetic">Sanjana.</a>
-        <div class="nav__links">
+        
+        <!-- Desktop Links (Hidden on Mobile) -->
+        <div class="nav__links desktop-only">
             <a href="#work" class="nav__link magnetic hoverable">Work</a>
             <a href="#about" class="nav__link magnetic hoverable">About</a>
             <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
-            <!-- Proper visible theme toggle -->
             <button class="theme-btn magnetic hoverable" id="themeToggle" aria-label="Toggle Theme">
                 <span id="themeLabel">☾ Dark</span>
             </button>
         </div>
+
+        <!-- Mobile Toggle (Visible only on Mobile) -->
+        <button class="nav__mobile-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+        </button>
     </nav>
+
+    <!-- Full-Screen Mobile Menu Overlay -->
+    <div class="nav-overlay" id="mobileMenuOverlay">
+        <div class="nav-overlay__content">
+            <a href="#work" class="nav-overlay__link">Work</a>
+            <a href="#about" class="nav-overlay__link">About</a>
+            <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav-overlay__link">Resume</a>
+            
+            <div class="nav-overlay__footer">
+                <button class="theme-btn theme-btn--mobile" id="themeToggleMobile">
+                    <span id="themeLabelMobile">☾ Dark</span>
+                </button>
+                <div class="nav-overlay__socials">
+                    <a href="https://www.linkedin.com/in/sanjana-gupta-187995230/" target="_blank">LinkedIn</a>
+                    <a href="https://behance.net/sanjanagupta18" target="_blank">Behance</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <main id="main-content" role="main">
         <!-- Reimagined Hero: The Kinetic Identity Hub -->
         <header class="hero" style="padding: 100px 0; min-height: 100vh; display: flex; align-items: center; position: relative; border-bottom: 1px solid var(--border); overflow: hidden;" aria-label="Professional Introduction">
@@ -951,78 +1062,64 @@
             }
         });
 
-        // --- 4. SCROLL REVEAL (Reactive Version) ---
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = new IntersectionObserver((entries) => {
+        // Reveal on scroll
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("is-inview");
-                } else {
-                    entry.target.classList.remove("is-inview");
-                }
+                if (entry.isIntersecting) entry.target.classList.add('is-inview');
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        revealElements.forEach(el => revealOnScroll.observe(el));
+        // Modern Mobile Menu Controller
+        const menuToggle = document.getElementById('mobileMenuToggle');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        const overlayLinks = document.querySelectorAll('.nav-overlay__link');
+        const bodyTag = document.body;
 
-        // --- 5. THEME TOGGLE (Proper Fix) ---
-        const themeBtn = document.getElementById('themeToggle');
-        const themeLabel = document.getElementById('themeLabel');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                bodyTag.classList.toggle('is-nav-open');
+            });
+        }
+
+        // Close on link click
+        overlayLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                bodyTag.classList.remove('is-nav-open');
+            });
+        });
+
+        // Theme Toggle Sync for Mobile
+        const mobileThemeToggle = document.getElementById('themeToggleMobile');
+        const mobileThemeLabel = document.getElementById('themeLabelMobile');
         
-        themeBtn.addEventListener('click', () => {
-            const body = document.body;
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                themeLabel.innerHTML = '☼ Light';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                themeLabel.innerHTML = '☾ Dark';
-            }
-        });
+        if(mobileThemeToggle) {
+            mobileThemeToggle.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('portfolio-theme', next);
+                
+                // Update Labels
+                if(mobileThemeLabel) mobileThemeLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+                const desktopLabel = document.getElementById('themeLabel');
+                if(desktopLabel) desktopLabel.textContent = next === 'dark' ? '☼ Light' : '☾ Dark';
+            });
+        }
 
-        // --- 6. Masonry Animation on Scroll ---
-        const masonryCards = document.querySelectorAll('.flip-card');
-        const masonryObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, idx) => {
-                if (entry.isIntersecting && !entry.target.classList.contains('auto-flipped')) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = 1;
-                        // Auto-flip effect: flip, then flip back after 1.2s
-                        entry.target.classList.add('flipped', 'auto-flipped');
-                        setTimeout(() => {
-                            entry.target.classList.remove('flipped');
-                        }, 1200);
-                    }, idx * 320);
-                }
-            });
-        }, { threshold: 0.15 });
-        masonryCards.forEach(card => {
-            card.style.opacity = 1;
-            masonryObserver.observe(card);
-            card.addEventListener('click', function(e) {
-                // Only flip if not clicking the link itself
-                if (e.target.tagName !== 'A' && e.target.tagName !== 'IMG') {
-                    card.classList.toggle('flipped');
-                }
-            });
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    card.classList.toggle('flipped');
-                }
-            });
-            card.setAttribute('tabindex', '0');
-        });
-        // --- 7. 3D Tilt/Parallax Effect on Masonry Cards ---
-        masonryCards.forEach(card => {
+        // Masonry Cards Logic
+        const masonryCards = document.querySelectorAll('.flip-reveal-card');
+        masonryCards.forEach((card, idx) => {
+            // No custom observer needed if using .reveal class already
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * 8;
-                const rotateY = ((x - centerX) / centerX) * 8;
-                card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+                const rotateX = ((y - centerY) / centerY) * 10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                card.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
