@@ -91,6 +91,8 @@
         /* Essential Utility Overrides */
         .btn-circle { white-space: nowrap !important; } /* Force CONNECT arrow to stay inline */
         
+        .nav__mobile-toggle { display: none; }
+
         @media (max-width: 900px) {
             /* 0. Universal Container Padding Recovery (Prevents flush edge-sticking) */
             .container { padding-left: 20px !important; padding-right: 20px !important; width: 100% !important; max-width: 100% !important; }
@@ -368,7 +370,7 @@
         <a href="/" class="nav__logo magnetic">Sanjana.</a>
         
         <!-- Desktop Links (Hidden on Mobile) -->
-        <div class="nav__links desktop-only">
+        <div class="nav__links desktop-only" style="margin-left: auto;">
             <a href="#work" class="nav__link magnetic hoverable">Work</a>
             <a href="#about" class="nav__link magnetic hoverable">About</a>
             <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="nav__link magnetic hoverable">Resume</a>
@@ -379,10 +381,8 @@
 
         <!-- Mobile Toggle (Visible only on Mobile) -->
         <button class="nav__mobile-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
-            <div class="nav__mobile-toggle-btn">
-                <span class="line line-1"></span>
-                <span class="line line-2"></span>
-            </div>
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
         </button>
     </nav>
 
