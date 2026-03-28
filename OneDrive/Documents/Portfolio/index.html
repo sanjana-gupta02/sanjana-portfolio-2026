@@ -607,17 +607,17 @@
                         </h2>
                         
                         <div class="about-text-group" style="max-width: 550px;">
-                            <p style="font-size: 19px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4; font-weight: 400;">
-                                I am a Product Designer & Software Engineer specialized in architecting systems that <i style="font-family: 'Instrument Serif', serif; font-style: italic;">anticipate human friction.</i>
+                            <p style="font-size: 19px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4; font-weight: 500;">
+                                I architect <i style="font-family: 'Instrument Serif', serif; font-style: italic;">fault-tolerant user experiences.</i>
                             </p>
-                            <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.6;">
-                                With a foundation in software engineering and a deep empathy for the user journey, I bridge the void between complex technical architecture and intuitive interface design. Great products aren't just built—they are <strong style="color: var(--text-primary);">choreographed.</strong>
+                            <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.7;">
+                                With a dual-disciplinary background in Software Engineering and Product Design, I occupy the critical space between <strong style="color: var(--text-primary);">code and human behavior.</strong> My approach isn't just about 'how it looks'—it's about how it handles complexity, scale, and the inevitable friction of human interaction. Currently scaling the digital future @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis.</strong>
                             </p>
                             
                             <div style="display: flex; align-items: center; gap: 32px;">
                                 <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-circle magnetic hoverable" style="width: 140px; height: 140px; text-transform: uppercase; font-size: 13px; font-weight: 500;">RESUME ↗</a>
                                 <div style="opacity: 0.4; font-size: 9px; text-transform: uppercase; letter-spacing: 2px; line-height: 1.5;">
-                                    ARCHITECTING <br> EXCELLENCE.
+                                    ARCHITECTING <br> DIGITAL TRUST.
                                 </div>
                             </div>
                         </div>
@@ -989,6 +989,37 @@
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
+            });
+        });
+
+        // --- 8. Work List Image Follow Effect ---
+        const workRows = document.querySelectorAll('.work-row');
+        workRows.forEach(row => {
+            const image = row.querySelector('.work-row__image');
+            row.addEventListener('mousemove', (e) => {
+                const rect = row.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Fine-tuned offset for premium centering
+                if (image) {
+                    image.style.transform = `translate(${x - 400}px, ${y - 250}px) scale(1.1)`;
+                }
+            });
+            
+            row.addEventListener('mouseenter', () => {
+                if (image) {
+                    image.style.opacity = '1';
+                    image.style.visibility = 'visible';
+                }
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                if (image) {
+                    image.style.opacity = '0';
+                    image.style.visibility = 'hidden';
+                    image.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                }
             });
         });
     </script>
