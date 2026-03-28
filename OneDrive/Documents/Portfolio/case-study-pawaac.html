@@ -153,88 +153,60 @@
             font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
+        }        /* Reimagined Pro Styles */
+        .cs-grid-bento {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin: 40px 0;
         }
-
-        .cs-body {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 24px;
+        .bento-item {
+            grid-column: span 6;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            transition: transform 0.3s ease;
         }
-
-        .cs-section { margin-bottom: var(--space-7); }
-
-        .cs-section__num {
-            font-size: 12px;
+        .bento-item:hover { transform: translateY(-5px); }
+        .bento-item--full { grid-column: span 12; }
+        .bento-item--third { grid-column: span 4; }
+        
+        .cs-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 40px 0;
+        }
+        .comp-card {
+            background: var(--bg-primary);
+            padding: 40px;
+        }
+        .bento-item h3, .bento-item h4 {
+            font-family: var(--jakarta);
+            font-size: 11px;
             font-weight: 700;
-            color: var(--accent-pawaac);
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 16px;
-            display: block;
+            color: var(--accent-pawaac);
+            margin-bottom: 12px;
         }
 
-        .cs-section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 24px;
-            line-height: 1.2;
-            letter-spacing: -1px;
-        }
-
-        .cs-section p {
-            font-size: 18px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 24px;
-        }
-
-        .cs-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 24px 0;
-        }
-
-        .cs-section ul li {
-            font-size: 17px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            padding: 10px 0;
-            padding-left: 28px;
-            position: relative;
-        }
-
-        .cs-section ul li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 20px;
-            width: 8px;
-            height: 2px;
-            background: var(--accent-pawaac);
-        }
-
-        .cs-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 32px 0;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .cs-table th {
-            text-align: left;
-            padding: 16px 20px;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-        }
-        .cs-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
-            color: var(--text-secondary);
+        .cs-focus-text {
+            font-family: var(--jakarta);
+            font-size: clamp(20px, 4vw, 36px) !important;
+            font-weight: 500;
+            line-height: 1.4 !important;
+            letter-spacing: -0.02em;
+            color: var(--text-primary) !important;
+            margin: 64px 0 !important;
+            border-left: 2px solid var(--accent-pawaac);
+            padding-left: 32px;
+            max-width: 800px;
         }
 
         @media (max-width: 900px) {
@@ -243,6 +215,9 @@
             .cs-meta-row { gap: 24px; flex-direction: column; }
             .live-browser { height: 450px; width: 95vw; margin-left: -2.5vw; }
             .cs-body { padding: 40px 16px; }
+            .cs-grid-bento .bento-item, .cs-comparison, .cs-stat-grid { grid-template-columns: 1fr; }
+            .cs-grid-bento .bento-item { grid-column: span 12; }
+            .cs-focus-text { padding-left: 20px; font-size: 24px !important; }
 
             /* Mobile Menu Reimagined P2 */
             .desktop-only { display: none !important; }
@@ -390,27 +365,27 @@
         <div class="container">
             <header class="cs-hero reveal">
                 <a href="index.html" class="cs-hero__back">← Back to work</a>
-                <span class="cs-hero__tag">Web Design · Premium Tech · 2024</span>
-                <h1 class="cs-hero__title">PAWAAC: Marketing a <em>Tech Giant.</em></h1>
-                <p class="cs-hero__subtitle">Redesigned from scratch in Framer, the official PAWAAC product website is architected for premium brand storytelling and high-intent user conversion. Built for a world of autonomous precision.</p>
+                <span class="cs-hero__tag">Product Design · Case Study</span>
+                <h1 class="cs-hero__title">Pawaac: Designing a <em>High-Clarity</em> Product Experience.</h1>
+                <p class="cs-hero__subtitle">Pawaac is a modern web experience designed to communicate brand value through clarity, structure, and motion-driven storytelling. Redesigned and built in Framer to guide users through complex tech effortlessly.</p>
                 
                 <div class="cs-meta-row">
                     <div class="cs-meta-item">
-                        <div class="cs-meta-item__label">Role</div>
-                        <div class="cs-meta-item__value">Product Designer</div>
+                        <div class="cs-meta-item__label">Expertise</div>
+                        <div class="cs-meta-item__value">End-to-end Product Design</div>
                     </div>
                     <div class="cs-meta-item">
-                        <div class="cs-meta-item__label">Duration</div>
-                        <div class="cs-meta-item__value">6 Weeks</div>
+                        <div class="cs-meta-item__label">Core Focus</div>
+                        <div class="cs-meta-item__value">UX Strategy & Motion</div>
                     </div>
                     <div class="cs-meta-item">
-                        <div class="cs-meta-item__label">Tools Use</div>
-                        <div class="cs-meta-item__value">Framer, Figma</div>
+                        <div class="cs-meta-item__label">Engine</div>
+                        <div class="cs-meta-item__value">Framer (Built & Shipped)</div>
                     </div>
                     <div class="cs-meta-item">
-                        <div class="cs-meta-item__label">Live Link</div>
+                        <div class="cs-meta-item__label">Live View</div>
                         <a href="https://www.pawaac.com/" target="_blank" style="text-decoration: none;">
-                            <div class="cs-meta-item__value" style="color: var(--accent-pawaac); text-transform: uppercase; letter-spacing: 1px;">Visit Site ↗</div>
+                            <div class="cs-meta-item__value" style="color: var(--accent-pawaac); text-transform: uppercase; letter-spacing: 1px;">Launch Site ↗</div>
                         </a>
                     </div>
                 </div>
@@ -421,74 +396,162 @@
                 </div>
             </header>
 
-            <main class="cs-body">
-                <!-- Overview -->
+            <main class="cs-body" style="max-width: 1100px;">
+                <!-- Section 1: Overview -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">01 / The Mission</span>
-                    <h2>Telling the Story of Tech.</h2>
-                    <p>When I was approached to redesign the PAWAAC website, the challenge was clear: move away from a traditional dashboard-style landing page towards a cinematic, high-end product experience. I focused on architecting a narrative that explains complex drone tech in an intuitive, premium way.</p>
+                    <span class="cs-section__num">01 / Overview</span>
+                    <h2>The Challenge.</h2>
+                    <p style="max-width: 700px;">The challenge wasn’t just to design a visually appealing website — it was to create an experience that communicates value within seconds, guides users without friction, and feels premium without being overwhelming.</p>
                 </section>
 
-                <!-- Research -->
+                <!-- Section 2: The Problem -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">02 / Discovery</span>
-                    <h2>Simplifying Complexity.</h2>
-                    <p>Before moving to Figma, I conducted stakeholder interviews to map out the "Technical Persona." We discovered that our users aren't just looking for specs—they're looking for operational confidence.</p>
-                    <table class="cs-table">
-                        <thead>
-                            <tr>
-                                <th>Insight</th>
-                                <th>Design Solution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Cognitive Overload</td>
-                                <td>Minimalist data visualization and layered disclosure.</td>
-                            </tr>
-                            <tr>
-                                <td>Trust in Precision</td>
-                                <td>Micro-animations signifying data processing speed.</td>
-                            </tr>
-                            <tr>
-                                <td>Brand Authority</td>
-                                <td>High-contrast, brutalist-industrial typography.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <span class="cs-section__num">02 / The friction</span>
+                    <h2>Clarity beats Complexity.</h2>
+                    <p>Most modern websites fail at a critical balance: they are either visually impressive but confusing, or clear but forgettable.</p>
+                    
+                    <div class="cs-comparison">
+                        <div class="comp-card">
+                            <h4>The Current Friction</h4>
+                            <p>✕ Weak messaging hierarchy</p>
+                            <p>✕ Over-animated distractions</p>
+                            <p>✕ Static, low-engagement layouts</p>
+                            <p>✕ Poor narrative flow</p>
+                        </div>
+                        <div class="comp-card" style="background: var(--bg-secondary);">
+                            <h4>The Pawaac Solution</h4>
+                            <p>✓ Instant value communication</p>
+                            <p>✓ Motion as a UX guidance tool</p>
+                            <p>✓ Progressive disclosure</p>
+                            <p>✓ High-intent storytelling</p>
+                        </div>
+                    </div>
                 </section>
 
-                <!-- Process -->
+                <p class="cs-focus-text reveal">"How might we design a website that is both engaging and instantly understandable — without compromising usability?"</p>
+
+                <!-- Section 3: User Understanding -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">03 / Design Logic</span>
-                    <h2>Architecture of Trust.</h2>
-                    <p>Defense tech often feels cold and intimidating. I chose to blend industrial aesthetics with "human-first" interaction models. If an operator trusts the interface, they make fewer tactical errors.</p>
-                    <ul>
-                        <li><strong>Blueprint Grid:</strong> Established a strict mathematical layout that feels engineered and reliable.</li>
-                        <li><strong>High-Contrast HUD:</strong> Optimized for visibility in low-light environments (night surveillance).</li>
-                        <li><strong>Fluid Interactions:</strong> Using Framer’s motion engine to signify data flow transitions.</li>
-                    </ul>
+                    <span class="cs-section__num">03 / Behavioral Logic</span>
+                    <h2>Users don’t explore. They follow clarity. </h2>
+                    <p>I defined behavioral assumptions based on real-world patterns. Every section was designed to answer a user question immediately.</p>
+                    
+                    <div class="cs-grid-bento">
+                        <div class="bento-item">
+                            <h4>Target Audience</h4>
+                            <p style="font-size: 14px; line-height: 1.8;">First-time visitors, potential clients, and collaborators seeking trust and precision in autonomous solutions.</p>
+                        </div>
+                        <div class="bento-item">
+                            <h4>Core Friction</h4>
+                            <p style="font-size: 14px; line-height: 1.8;">Cognitive overload and confusing navigation structures often lead to high bounce rates.</p>
+                        </div>
+                        <div class="bento-item bento-item--full" style="background: var(--accent-pawaac); color: white; border: none;">
+                            <h4 style="color: rgba(255,255,255,0.7)">The Philosophy</h4>
+                            <h2 style="color: white; margin-top: 10px; font-size: calc(1.5rem + 1vw); line-height: 1.3;">Every interaction should <em>reduce friction</em>, never increase it.</h2>
+                        </div>
+                    </div>
                 </section>
 
-                <!-- Expansion: Component System -->
+                <!-- Section 4: Key Decisions -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">04 / Product Scalability</span>
-                    <h2>A Modular Component System.</h2>
-                    <p>Because PAWAAC is an evolving tech family, the website needed to scale. I developed a design system of 40+ unique components in Framer, allowing the marketing team to launch new landing pages for various drone models in hours rather than weeks.</p>
+                    <span class="cs-section__num">04 / Design Decisions</span>
+                    <h2>Where the Real Thinking is.</h2>
+                    
+                    <div class="cs-grid-bento">
+                        <div class="bento-item bento-item--third">
+                            <h3 style="font-size: 13px; text-transform: uppercase;">Scanning > Reading</h3>
+                            <p style="font-size: 14px; margin-top: 10px; line-height: 1.6;">Large, bold headlines and minimal supporting text. Because users skim, clarity wins.</p>
+                        </div>
+                        <div class="bento-item bento-item--third">
+                            <h3 style="font-size: 13px; text-transform: uppercase;">Motion as Utility</h3>
+                            <p style="font-size: 14px; margin-top: 10px; line-height: 1.6;">Motion revealed content progressively to guide attention, not just for decoration.</p>
+                        </div>
+                        <div class="bento-item bento-item--third">
+                            <h3 style="font-size: 13px; text-transform: uppercase;">One Section, One Message</h3>
+                            <p style="font-size: 14px; margin-top: 10px; line-height: 1.6;">Removed clutter to ensure each scroll delivered a single, focused insight.</p>
+                        </div>
+                    </div>
                 </section>
 
-                <!-- Challenges -->
+                <!-- Section 5: Visual DNA -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">05 / The Technical Hurdle</span>
-                    <h2>Performance at Scale.</h2>
-                    <p>The primary challenge was balancing high-fidelity video background assets with web performance. I implemented a custom lazy-loading strategy and video optimization pipeline that reduced page load times by 40% without sacrificing visual crispness.</p>
+                    <span class="cs-section__num">05 / Visual DNA</span>
+                    <h2>The Language of Precision.</h2>
+                    <div class="cs-grid-bento">
+                        <div class="bento-item--third bento-item" style="display: flex; flex-direction: row; align-items: center; gap: 16px; padding: 24px;">
+                            <div style="width: 48px; height: 48px; background: var(--accent-pawaac); border-radius: 12px; flex-shrink: 0;"></div>
+                            <div>
+                                <h4 style="margin-bottom: 4px;">Primary</h4>
+                                <span style="font-size: 10px; opacity: 0.6; font-family: monospace;">#3B82F6</span>
+                            </div>
+                        </div>
+                        <div class="bento-item--third bento-item" style="display: flex; flex-direction: row; align-items: center; gap: 16px; padding: 24px;">
+                            <div style="width: 48px; height: 48px; background: var(--text-primary); border-radius: 12px; flex-shrink: 0;"></div>
+                            <div>
+                                <h4 style="margin-bottom: 4px;">Ink</h4>
+                                <span style="font-size: 10px; opacity: 0.6; font-family: monospace;">#000000</span>
+                            </div>
+                        </div>
+                        <div class="bento-item--third bento-item" style="display: flex; flex-direction: row; align-items: center; gap: 16px; padding: 24px;">
+                            <div style="width: 48px; height: 48px; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border); flex-shrink: 0;"></div>
+                            <div>
+                                <h4 style="margin-bottom: 4px;">Surface</h4>
+                                <span style="font-size: 10px; opacity: 0.6; font-family: monospace;">Secondary</span>
+                            </div>
+                        </div>
+                        <div class="bento-item" style="grid-column: span 12; padding: 60px;">
+                            <h4>Typography System</h4>
+                            <h3 style="font-family: var(--jakarta); font-size: 32px; font-weight: 700; color: var(--text-primary); text-transform: none; letter-spacing: -1px; margin-bottom: 8px;">Plus Jakarta Sans / UI & Headers</h3>
+                            <p style="font-family: var(--instrument); font-style: italic; font-size: 28px; color: var(--accent-pawaac); margin-bottom: 24px;">Instrument Serif / Editorial Emphasis</p>
+                            <p style="font-size: 15px; opacity: 0.7; line-height: 1.8; max-width: 600px;">A calculated pairing designed to balance technical performance with high-end storytelling.</p>
+                        </div>
+                    </div>
                 </section>
 
-                <!-- Impact -->
+                <!-- Section 6: Challenges -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">06 / Outcome</span>
-                    <h2>Mission Successful.</h2>
-                    <p>The redesign transformed a complex dashboard into a streamlined command center. The result is a platform that isn't just "functional"—it's a premium experience that respects the user’s cognitive load.</p>
+                    <span class="cs-section__num">06 / Strategic Trade-offs</span>
+                    <h2>Navigating the Friction.</h2>
+                    <div class="cs-grid-bento">
+                        <div class="bento-item">
+                            <h4 style="font-size: 13px; text-transform: uppercase;">Over-animation Risk</h4>
+                            <p style="font-size: 14px; margin-top: 10px;">Too much motion = distraction. I used motion only where it explicitly added meaning or revealed new context.</p>
+                        </div>
+                        <div class="bento-item">
+                            <h4 style="font-size: 13px; text-transform: uppercase;">Clarity vs. Minimalism</h4>
+                            <p style="font-size: 14px; margin-top: 10px;">Less text can reduce understanding. I solved this through a strong visual hierarchy and hyper-precise copy.</p>
+                        </div>
+                        <div class="bento-item bento-item--full">
+                            <h4 style="font-size: 13px; text-transform: uppercase;">Maintaining Narrative Flow</h4>
+                            <p style="font-size: 14px; margin-top: 10px;">Users often drop off between sections. I designed the scroll itself as a guided narrative to lead the eye naturally down the page.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 7: Impact -->
+                <section class="cs-section reveal">
+                    <span class="cs-section__num">07 / Product Impact</span>
+                    <h2>Measurable Outcomes.</h2>
+                    <div class="cs-stat-grid">
+                        <div class="stat-card">
+                            <span class="num">< 10s</span>
+                            <span class="label">Value communicated</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="num">High</span>
+                            <span class="label">Session Engagement</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="num">40%+</span>
+                            <span class="label">Perceived Performance</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Final Takeaway -->
+                <section class="cs-section reveal" style="text-align: center; padding: 100px 0;">
+                    <h2 style="font-family: var(--instrument); font-style: italic; font-size: 48px; font-weight: 400;">Good design is not about visual complexity — it’s about reducing complexity for the user.</h2>
+                    <p style="margin-top: 24px;">This project reflects my approach: clarity first, interaction second, aesthetics third.</p>
                 </section>
             </main>
 
