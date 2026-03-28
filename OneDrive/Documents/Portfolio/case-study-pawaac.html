@@ -84,18 +84,18 @@
         }
 
         .cs-hero__title {
-            font-size: clamp(32px, 8vw, 84px); /* Slightly smaller start for mobile */
+            font-size: clamp(32px, 8vw, 84px);
             line-height: 1.05;
             color: var(--text-primary);
             max-width: 900px;
             margin-bottom: 32px;
-            font-weight: 600;
-            letter-spacing: -2.5px;
-            word-break: break-word; /* Safety for long titles */
+            font-weight: 700;
+            letter-spacing: -3px; /* Strong premium tight tracking */
+            word-break: break-word;
         }
 
         .cs-hero__title em {
-            font-family: 'Instrument Serif', serif;
+            font-family: var(--instrument);
             font-style: italic;
             font-weight: 400;
             color: var(--accent-pawaac);
@@ -550,8 +550,8 @@
 
                 <!-- Final Takeaway -->
                 <section class="cs-section reveal" style="text-align: center; padding: 100px 0;">
-                    <h2 style="font-family: var(--instrument); font-style: italic; font-size: 48px; font-weight: 400;">Good design is not about visual complexity — it’s about reducing complexity for the user.</h2>
-                    <p style="margin-top: 24px;">This project reflects my approach: clarity first, interaction second, aesthetics third.</p>
+                    <h2 style="font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -2.5px;">Good design is not about visual complexity — it’s about reducing complexity for the user.</h2>
+                    <p style="margin-top: 24px; font-size: 18px; opacity: 0.6;">This project reflects my approach: clarity first, interaction second, aesthetics third.</p>
                 </section>
             </main>
 
