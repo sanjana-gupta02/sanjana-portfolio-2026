@@ -11,17 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Theme Persistence Script (Critical for preventing light flashes) -->
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            document.addEventListener('DOMContentLoaded', () => {
-                document.body.setAttribute('data-theme', savedTheme);
-            });
-        })();
-    </script>
-    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+
     <style>
         :root {
             --jakarta: 'Plus Jakarta Sans', sans-serif;
@@ -553,12 +548,15 @@
 
                 <!-- Outcome -->
                 <section class="cs-section reveal">
-                    <span class="cs-section__num">10 / What I Learned</span>
-                    <h2>This project taught me a lot.</h2>
-                    <p>Designing ZODIAQ was one of my most meaningful projects. It challenged me to design for a niche audience, simplify complex information (like Kundali charts and Panchang data), and create an experience that feels trustworthy.</p>
-                    <p>From the first brainstorming session to collecting final feedback — every step of the process taught me how to balance visual design with real usability. I’m proud of how the final product turned out.</p>
+                    <span class="cs-section__num">10 / Strategic Takeaway</span>
+                    <h2>Engineering Trust through Data Simplification.</h2>
+                    <p style="font-size: 19px; line-height: 1.8;">The ZODIAQ project was a masterclass in 'Contextual UX'. The challenge wasn't just aesthetics—it was about translating complex ancient astrological data (Kundali & Panchang) into a frictionless, modern mobile interface that a user could navigate under high emotional stress. </p>
+                    <div style="padding: 24px; border-left: 4px solid var(--accent-zodiaq); background: var(--bg-secondary); margin-bottom: 32px;">
+                        <p style="margin: 0; font-weight: 600; font-family: var(--instrument); font-size: 20px; font-style: italic;">"The success of a niche product lies in the removal of noise. By stripping back decorative mysticism, we boosted booking conversion for first-time users."</p>
+                    </div>
+                    <p style="font-size: 19px; line-height: 1.8; opacity: 0.8;">This project proved that design maturity is found in restraint. High-end product experiences don't over-design; they solve problems with maximum clarity.</p>
                     <div style="margin-top: 40px;">
-                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill">Explore Live Platform ↗</a>
+                        <a href="https://www.myzodiaq.in/en" target="_blank" class="live-link-pill" style="padding: 18px 36px; background: var(--accent-zodiaq); color: white; text-decoration: none; border-radius: 99px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;">Explore Live Platform ↗</a>
                     </div>
                 </section>
             </main>

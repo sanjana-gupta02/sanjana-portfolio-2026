@@ -166,30 +166,19 @@
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 padding: 40px 0 !important;
-                gap: 20px !important;
-                border-bottom: 1px solid var(--border);
+                gap: 24px !important;
             }
-            .work-row__info { 
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 12px !important;
-                width: 100% !important; 
-            }
-            .work-row__title { font-size: 3rem !important; margin: 0 !important; }
-            .work-row__num { width: auto !important; margin-bottom: 8px !important; display: block !important; }
+            .work-row__info { width: 100% !important; flex: none !important; }
             .work-row__image {
                 position: relative !important;
-                left: 0 !important; top: 0 !important;
+                top: 0 !important; right: 0 !important;
                 transform: none !important;
                 width: 100% !important;
-                max-width: none !important;
                 height: auto !important;
-                aspect-ratio: 16/10 !important;
+                aspect-ratio: 16/9 !important;
                 opacity: 1 !important;
                 visibility: visible !important;
-                margin-top: 10px !important;
             }
-            .work-row:hover .work-row__title { transform: none !important; }
 
             /* 6. About Section */
             #about > div > div {
@@ -274,16 +263,16 @@
                 
                 <!-- Left Rail: Vertical Serial Data -->
                 <div class="reveal" style="writing-mode: vertical-rl; transform: rotate(180deg); display: flex; justify-content: space-between; height: 100%; border-right: 1px solid var(--border); padding-right: 24px;">
-                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">ID: SANJANA_GUPTA_V3</span>
-                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">LOC: VRN / UP</span>
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">STATUS: ARCHITECTING_UX</span>
+                    <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7;">LOC: VRN / IND</span>
                 </div>
 
                 <!-- Center: Multi-Layered Identity Core -->
                 <div class="hero-center" style="position: relative; text-align: center;">
                     <div class="reveal" style="margin-bottom: 32px;">
-                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
-                            I DESIGN <br> 
-                            <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); text-transform: lowercase;">products</i>
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            ENGINEERING-LED <br> 
+                            <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--accent); text-transform: lowercase;">product design</i>
                         </h1>
                     </div>
 
@@ -295,20 +284,20 @@
                     </div>
 
                     <div class="reveal" style="margin-top: 32px;">
-                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
-                            PEOPLE <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text-primary); text-transform: lowercase;">actually</i> USE.
+                        <h1 style="font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.8; letter-spacing: -6px; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                            BUILDING <i style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--text-primary); text-transform: lowercase;">systems</i> AT SCALE.
                         </h1>
                     </div>
 
                     <div style="max-width: 700px; margin: 40px auto;" class="reveal fade-up">
                         <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.6;">
-                            A Product Designer with an engineering foundation @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis</strong>.<br>
+                            Solving complex user friction through architectural precision @ <strong style="color: var(--text-primary);">CAPGEMINI Stellantis</strong>.<br>
                             Specialized in high-end design systems for SaaS, Fintech & Defense.
                         </p>
                     </div>
 
                     <div class="hero-actions" style="display: flex; gap: 24px; justify-content: center; margin-top: 48px;">
-                        <a href="#work" class="btn-primary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">SEE WORK</a>
+                        <a href="#work" class="btn-primary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">EXPLORE SYSTEMS</a>
                         <a href="https://drive.google.com/file/d/1_UlnaPvmlF-WjHcZ0Hj5qMyaHlZNzmox/view?usp=drive_link" target="_blank" class="btn-secondary magnetic hoverable" style="padding: 20px 40px; border-radius: 99px;">RESUME</a>
                     </div>
                 </div>
@@ -939,30 +928,19 @@
 
         revealElements.forEach(el => revealOnScroll.observe(el));
 
-        // --- 5. THEME TOGGLE (Persistence Edition) ---
-        const body = document.body;
+        // --- 5. THEME TOGGLE (Proper Fix) ---
         const themeBtn = document.getElementById('themeToggle');
         const themeLabel = document.getElementById('themeLabel');
-
-        const updateThemeLabel = (theme) => {
-            if (theme === 'dark') {
-                themeLabel.innerHTML = '☾ Dark';
-            } else {
-                themeLabel.innerHTML = '☼ Light';
-            }
-        };
-
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-        body.setAttribute('data-theme', currentTheme);
-        updateThemeLabel(currentTheme);
-
+        
         themeBtn.addEventListener('click', () => {
-            const isDark = body.getAttribute('data-theme') === 'dark';
-            const newTheme = isDark ? 'light' : 'dark';
-            
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeLabel(newTheme);
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeLabel.innerHTML = '☼ Light';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeLabel.innerHTML = '☾ Dark';
+            }
         });
 
         // --- 6. Masonry Animation on Scroll ---
